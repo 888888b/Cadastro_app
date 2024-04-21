@@ -327,6 +327,7 @@ header h1{
     position: absolute;
     top: 0;
     left: 0;
+    background-color: transparent;
   }
 
   .auth-page .sign-up-form{
