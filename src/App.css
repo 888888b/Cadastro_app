@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@keyframes fadeIn{
+  from{
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to{
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp{
+  from{
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+:root{
+  --black: black;
+  --black-opacity-01: rgb(0, 0, 0, 0.1);
+  --white: white;
+  --white-opacity-09: rgb(255, 255, 255, 0.9);
+  --white-opacity-07: rgb(255, 255, 255, 0.7);
+  --blue: blue;
+  --medium-blue: #0F0F1A;
+  --transparent: transparent;
+}
+
+body{
+  background-color: var(--medium-blue)
+}
+
+header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+  padding: 0px 50px;
+  box-sizing: border-box;
+}
+
+header nav ul{
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 2.5rem;
+}
+
+header ul li{
+  border-bottom: 1.7pt solid transparent;
+}
+
+header ul li:first-child{
+  border-bottom: 1.5pt solid var(--white);
+}
+
+header ul li, header h1, .homepage h1, .cadastros-page h1, .profile-page h1{
+  font: 400 19px 'Poppins',helvetica, sans-serif;
+  cursor: pointer;
+  color: var(--white);
+}
+
+header h1{
+  font-size: 21px;
+  cursor: auto;
+}
+
+.homepage, .cadastros-page, .profile-page, .auth-page{
+  width: 100%;
+  height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn .3s ease-in-out;
+}
+
+.homepage h1, .cadastros-page h1, .profile-page h1{
+  font-size: 30px;
+  cursor: auto;
+}
+
+.cadastros-page{
+  flex-direction: column;
+}
+
+.cadastros-page .section-title h1{
+  font: 500 22px 'Poppins', helvetica sans-serif;
+}
+
+.cadastros-page table{
+  margin-top: 20px;
+  border: 1pt solid var(--white);
+  background-color: var(--white);
+  border-radius: 3px;
+}
+
+.cadastros-page table .table-title{
+  color: var(--black);
+  font: 600 18px 'Roboto', serif;
+}
+
+.cadastros-page table th, td{
+  border: none;
+  border-bottom: 1pt solid var(--black);
+  color: var(--medium-blue);
+  padding: 10px 40px;
+  font: 500 16px 'Poppins', 'Montserrat', serif;
+}
+
+.cadastros-page table tr:last-child td{
+  border-bottom: none;
+}
+
+.cadastros-page table .table-name{
+  text-align: end;
+}
+
+.cadastros-page table .table-id{
+  border-right: 1pt solid var(--black);
+  text-align: center;
+}
+
+.cadastros-page table .table-email{
+  border-right: 1pt solid var(--black);
+}
+
+.auth-page{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: none;
+  background-color: var(--medium-blue);
+  z-index: 10;
+}
+
+.auth-page .auth-form{
+  overflow-y: hidden;
+}
+
+.auth-page .auth-form, .page-text-area{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  transition: all .3s ease-in-out;
+}
+
+.auth-page .sign-up-form{
+  opacity: 0;
+}
+
+.auth-page .auth-form .change-form-btns, form button{
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  background-color: var(--white);
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 4px 30px;
+  color: var(--black);
+  cursor: pointer;
+  font: 500 16px 'Poppins', 'Roboto', sans-serif;
+}
+
+.auth-page .auth-form .change-form-btns{
+  animation: fadeUp .4s ease-in-out;
+  font-family: 'Roboto';
+  padding: 6px 30px;
+}
+
+.auth-page .auth-form form{
+  min-width: 70%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  animation: fadeUp .4s ease-in-out;
+}
+
+.auth-page form h2{
+  color: var(--white);
+  font: 600 35px 'Poppins', 'Roboto', sans-serif;
+}
+
+.auth-page .email-input-box, .password-input-box, .check-box{
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.auth-page form label{
+  color: var(--white-opacity-09);
+  font: 500 17px 'Poppins', 'Roboto',sans-serif;
+}
+
+.auth-page form .input-box{
+  width: 100%;
+  position: relative;
+}
+
+.auth-page form .input-box .show-icon{
+  color: var(--white-opacity-07);
+  background-color: var(--transparent);
+  position: absolute;
+  font-size: 20px;
+  height: 100%;
+  top: 50%;
+  right: 20px;
+  cursor: pointer;
+  transform:  translateY(-50%);
+  opacity: 0;
+  z-index: 10;
+  transition: all .2s ease-in-out;
+}
+
+.auth-page form .input-box .active{
+  opacity: 1;
+}
+
+.auth-page form input{
+  color: var(--white);
+  width: 100%;
+  background-color: var(--transparent);
+  padding: 5px;
+  border: none;
+  border-bottom: 1pt solid var(--white-opacity-07);
+  outline: none;
+  font: 500 16px 'Poppins', 'Roboto',sans-serif;
+}
+
+.auth-page form input::placeholder{
+  font-size: 0.95em;
+}
+
+.auth-page form .check-box{
+  flex-direction: row;
+  gap: 10px;
+}
+
+.auth-page form .check-box input{
+  width: 15px;
+}
+
+.auth-page form .check-box label{
+  font-size: 15px;
+  color: var(--white-opacity-09);
+}
+
+.auth-page form .check-box label span{
+  color: var(--blue);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: 'Montserrat',helvetica, sans-serif;
+}
+
+.auth-page form button{
+  position: static;
+  padding: 10px 0px;
+  font-size: 17px;
+  margin-top: 10px;
+  font-family: 'Roboto', 'Poppins', sans-serif;
+}
+
+.page-text-area{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  opacity: 1;
+  height: 100vh;
+  border-top-right-radius: 200px;
+  background-color: var(--white);
+  overflow-y: hidden;
+}
+
+.page-text-area .text-center{
+  width: 50%;
+  min-width: 500px;
+  animation: fadeUp .4s ease-in-out;
+}
+
+.page-text-area .text-center h1{
+  color: var(--medium-blue);
+  font: 800 65px 'Poppins', serif;
+  position: relative;
+}
+
+.page-text-area .text-center h1::before{
+  content: '';
+  width: 50%;
+  position: absolute;
+  height: 100%;
+  bottom: 0;
+  border: none;
+  border-bottom: 6pt solid var(--medium-blue);
+}
+
+.page-text-area .text-center h2{
+  color: var(--medium-blue);
+  font: 600 17px 'Montserrat', serif;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 1080px){
+  .auth-page .auth-form{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .auth-page .sign-up-form{
+    left: -100%;
+  }
+
+  .auth-page .page-text-area{
+    display: none;
+  }
+
+}
