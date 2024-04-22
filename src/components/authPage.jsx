@@ -1,15 +1,37 @@
 import { useEffect, useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { initializeApp } from "firebase/app";
+signInWithEmailAndPassword
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 function AuthPage({ onLogged }) {
     const mainRef = useRef(undefined);
     const signInInput = useRef(undefined);
     const signUpInput = useRef(undefined);
+    const [signUpEmail, setSignUpEmail] = useState(undefined);
+    const [signUpPassword, setSignUpPassword] = useState(undefined);
+    const [signInEmail, setSignInEmail] = useState(undefined);
+    const [signInPassword, setSignInPassword] = useState(undefined);
     const [showBtnActive, setShowBtnActive] = useState('disable');
     let children = undefined;
+    const [isLogged, setIsLogged] = useState(false);
     let formType = 'sign-in';
     const navigate = useNavigate(undefined);
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBtuIzYiWYVg7j55olwUasnBSxS0ZOYEyo",
+        authDomain: "login-project033.firebaseapp.com",
+        projectId: "login-project033",
+        storageBucket: "login-project033.appspot.com",
+        messagingSenderId: "184638576364",
+        appId: "1:184638576364:web:f4773520ee157785f4b7c9",
+        measurementId: "G-GLZLSQQMEK"
+    };
+      
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth();
 
     const getRef = () => {
         if (mainRef.current){
@@ -42,6 +64,11 @@ function AuthPage({ onLogged }) {
     const handleInput = (e) => {
         if (e.target.value){
             setShowBtnActive('active');
+            if (e.target.id === 'sign-up-password'){
+                setSignUpPassword(e.target.value);
+            }else{
+                setSignInPassword(e.target.value);
+            }
         }else{
             setShowBtnActive('disable');
             signInInput.current.type = 'password';
@@ -61,24 +88,58 @@ function AuthPage({ onLogged }) {
         }
     }
 
-    setTimeout(() => {
-        onLogged = true;
-        console.log(onLogged);
-    }, 2000);
+    useEffect(() => {
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                setIsLogged(true);
+            } else {
+                setIsLogged(false);
+                navigate('/');
+            }
+        });
+    },[]);
 
-    const handleSubmitForm = () => {
-        navigate('/home');
+    const handleSubmitForm = (e) => {
+        if (isLogged){
+            navigate('/home');
+        }else{
+            navigate('/');
+        }
+
+        if (e.target.id === 'sign-up'){
+            createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword).then((userCredential) => {
+                const user = userCredential.user;
+            })
+            .catch((error) => {
+                console.log(error);
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+        }else{
+            signInWithEmailAndPassword(auth, signInEmail, signInPassword).then((userCredential) => {
+                const user = userCredential.user;
+            })
+            .catch((error) => {
+                console.log(error);
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+        }
+        setSignInEmail('');
+        setSignInPassword('');
+        setSignUpEmail('');
+        setSignUpPassword('');
     }
 
     return(
         <main ref={mainRef} className="auth-page">
             <section className="sign-up-form auth-form">
                 <button className="change-form-btns" onClick={handleChangeForm}>Entrar</button>
-                <form onSubmit={handleSubmitForm}>
+                <form id="sign-up" onSubmit={handleSubmitForm}>
                     <h2>Cadastro</h2>
                     <div className="email-input-box">
                         <label htmlFor="sign-up-email">Email</label>
-                        <input id="sign-up-email" type="text" placeholder="Digite seu email" required/>
+                        <input id="sign-up-email" type="text" placeholder="Digite seu email" onChange={(e) => {setSignUpEmail(e.target.value)}} required/>
                     </div>
                     <div className="password-input-box">
                         <label htmlFor="sign-up-password">Senha</label>
@@ -97,11 +158,11 @@ function AuthPage({ onLogged }) {
 
             <section className="sign-in-form auth-form">
                 <button className="change-form-btns" onClick={handleChangeForm}>Cadastro</button>
-                <form onSubmit={handleSubmitForm}>
+                <form id="sign-in" onSubmit={handleSubmitForm}>
                     <h2>Entrar</h2>
                     <div className="email-input-box">
                         <label htmlFor="sign-in-email">Email</label>
-                        <input id="sign-in-email" type="text" placeholder="Digite seu email" required/>
+                        <input id="sign-in-email" type="text" placeholder="Digite seu email" onChange={(e) => {setSignInEmail(e.target.value)}} required/>
                     </div>
                     <div className="password-input-box">
                         <label htmlFor="sign-in-password">Senha</label>
