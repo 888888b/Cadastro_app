@@ -111,7 +111,7 @@ function AuthPage({ onLogged }) {
                 const user = userCredential.user;
             })
             .catch((error) => {
-                console.log(error);
+                alert('Erro ao criar conta');
                 const errorCode = error.code;
                 const errorMessage = error.message;
             });
@@ -120,7 +120,7 @@ function AuthPage({ onLogged }) {
                 const user = userCredential.user;
             })
             .catch((error) => {
-                console.log(error);
+                alert('Erro ao realizar login');
                 const errorCode = error.code;
                 const errorMessage = error.message;
             });
