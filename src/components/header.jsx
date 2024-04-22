@@ -6,6 +6,7 @@ function Header() {
     const pagesRef = useRef(undefined);
     const navigate = useNavigate(undefined);
     let children = undefined;
+    
     const handlePagesRef = () => {
         if (pagesRef.current){
             children = pagesRef.current.childNodes;
@@ -34,6 +35,7 @@ function Header() {
                 <ul ref={pagesRef}>
                     <li id='home' onClick={handleNavigate}>Home</li>
                     <li id='usuarios' onClick={handleNavigate}>Usuarios</li>
+                    <li id="auth-page" onClick={handleNavigate}>Login</li>
                     <li id='profile' onClick={handleNavigate}>Conta</li>
                 </ul>
             </nav>

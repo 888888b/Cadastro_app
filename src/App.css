@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @keyframes fadeIn{
@@ -52,6 +53,10 @@ header{
   height: 70px;
   padding: 0px 50px;
   box-sizing: border-box;
+}
+
+.menu-container{
+  display: none;
 }
 
 header nav ul{
@@ -336,6 +341,117 @@ header h1{
 
   .auth-page .page-text-area{
     display: none;
+  }
+
+}
+
+@media screen and (max-width: 600px){
+  header{
+    justify-content: center;
+    height: 90px;
+    position: relative;
+  }
+
+  header h1{
+    display: none;
+  }
+
+  header nav{
+    display: none;
+  }
+
+  .menu-container{
+    display: block;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 180px;
+    left: 0;
+    background-color: var(--white);
+  }
+
+  
+
+  .menu-container::before{
+    content: '';
+    width: 100%;
+    height: 110%;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    left: 0;
+    background-color: var(--medium-blue);
+    transition: all .2s ease-in-out;
+  }
+
+  .menu-container .menu-icon-box{
+    width: 40px;
+    height: 35px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--white);
+    background-color: gray;
+    font-size: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    display: flex;
+    z-index: 4;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-container .options-box{
+    margin-top: 20px;
+    padding-left: 10px;
+  }
+
+  .menu-container ul{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  .menu-container ul li{
+    width: 100%;
+    font: 500 16px 'Roboto', 'Poppins', sans-serif;
+    color: var(--black);
+    border: none;
+    padding-bottom: 5px;
+    border-bottom: 1pt solid rgb(0, 0, 0, 0.1);
+  }
+
+  .cadastros-page{
+    width: 100%;
+  }
+
+  .cadastros-page table{
+    transform: scale(.65);
+  }
+
+  .cadastros-page .section-title h1{
+    text-align: center;
+  }
+
+  .cadastros-page .table-container{
+    margin: auto;
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    width: 90%;
+  }
+
+  .cadastros-page, .profile-page, .homepage{
+    height: calc(100vh - 150px);
+  }
+
+  .cadastros-page h1, .profile-page h1, .homepage h1{
+    font-size: 1.5em;
+  }
+  
+  .auth-page form .input-box .show-icon{
+    right: 5px;
   }
 
 }

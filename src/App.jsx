@@ -1,34 +1,32 @@
 import './App.css';
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import React from 'react';
 import Header from './components/header.jsx';
 import Home from './components/home.jsx';
 import Cadastros from './components/cadastros.jsx';
 import Profile from './components/profile.jsx';
 import AuthPage from './components/authPage.jsx';
+import Menu from './components/mobileMenu.jsx'
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return (
       <Router>
           <Routes>
-            <Route path='/' element={<AuthPage />} />
-            <Route path='*' element={<AuthenticatedRoutes />}/>
+            <Route path='/' element={<AuthPage/>} />
+            <Route path='*' element={isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to='/'/>} />
           </Routes>
       </Router>
   );
 }
 
 function AuthenticatedRoutes() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  if (!isLoggedIn){
-    return <Navigate to='/'/>
-  }
-
   return(
     <>
       <Header/>
+      <Menu/>
       <Routes>
           <Route path='/home' element={<Home/>}/>
           <Route path='/usuarios' element={<Cadastros />} />

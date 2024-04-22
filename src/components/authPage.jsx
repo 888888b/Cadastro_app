@@ -1,13 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-function AuthPage() {
+function AuthPage({ onLogged }) {
     const mainRef = useRef(undefined);
     const signInInput = useRef(undefined);
     const signUpInput = useRef(undefined);
     const [showBtnActive, setShowBtnActive] = useState('disable');
     let children = undefined;
     let formType = 'sign-in';
+    const navigate = useNavigate(undefined);
 
     const getRef = () => {
         if (mainRef.current){
@@ -59,11 +61,20 @@ function AuthPage() {
         }
     }
 
+    setTimeout(() => {
+        onLogged = true;
+        console.log(onLogged);
+    }, 2000);
+
+    const handleSubmitForm = () => {
+        navigate('/home');
+    }
+
     return(
         <main ref={mainRef} className="auth-page">
             <section className="sign-up-form auth-form">
                 <button className="change-form-btns" onClick={handleChangeForm}>Entrar</button>
-                <form>
+                <form onSubmit={handleSubmitForm}>
                     <h2>Cadastro</h2>
                     <div className="email-input-box">
                         <label htmlFor="sign-up-email">Email</label>
@@ -80,13 +91,13 @@ function AuthPage() {
                         <input id="btn-check1" type="checkbox" required/>
                         <label htmlFor="btn-check1">Eu concordo com os <span>Termos & Serviços</span></label>
                     </div>
-                    <button>Enviar</button>
+                    <button type="submit">Enviar</button>
                 </form>
             </section>
 
             <section className="sign-in-form auth-form">
                 <button className="change-form-btns" onClick={handleChangeForm}>Cadastro</button>
-                <form>
+                <form onSubmit={handleSubmitForm}>
                     <h2>Entrar</h2>
                     <div className="email-input-box">
                         <label htmlFor="sign-in-email">Email</label>
@@ -103,7 +114,7 @@ function AuthPage() {
                         <input id="btn-check2" type="checkbox" required/>
                         <label htmlFor="btn-check2">Eu concordo com os <span>Termos & Serviços</span></label>
                     </div>
-                    <button>Entrar</button>
+                    <button type="submit">Entrar</button>
                 </form>
             </section>
 
