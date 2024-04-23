@@ -150,25 +150,6 @@ function AuthPage({onLogged}) {
             handleSignUp();
         }else{
             handleSignIn();
-=======
-            createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword).then((userCredential) => {
-                const user = userCredential.user;
-            })
-            .catch((error) => {
-                alert('Erro ao criar conta');
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
-        }else{
-            signInWithEmailAndPassword(auth, signInEmail, signInPassword).then((userCredential) => {
-                const user = userCredential.user;
-            })
-            .catch((error) => {
-                alert('Erro ao realizar login');
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
->>>>>>> c4a1f091a166caa36c9ba7ef06a9dab0aac39ec8
         }
         setSignInEmail('');
         setSignInPassword('');

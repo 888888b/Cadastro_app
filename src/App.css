@@ -311,7 +311,7 @@ header h1{
 
 .page-text-area .text-center h1{
   color: var(--medium-blue);
-  font: 800 65px 'Poppins', serif;
+  font: 800 60px 'Poppins', serif;
   position: relative;
 }
 
@@ -322,7 +322,7 @@ header h1{
   height: 100%;
   bottom: 0;
   border: none;
-  border-bottom: 6pt solid var(--medium-blue);
+  border-bottom: 5pt solid var(--medium-blue);
 }
 
 .page-text-area .text-center h2{
