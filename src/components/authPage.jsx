@@ -2,10 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
-signInWithEmailAndPassword
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
-function AuthPage({ onLogged }) {
+function AuthPage({onLogged}) {
     const mainRef = useRef(undefined);
     const signInInput = useRef(undefined);
     const signUpInput = useRef(undefined);
@@ -39,9 +38,9 @@ function AuthPage({ onLogged }) {
         }else{
             setTimeout(getRef, 100);
         }
-    }
+    };
 
-    getRef()
+    getRef();
 
     const handleChangeForm = () => {
         if (formType === 'sign-in'){
@@ -59,7 +58,7 @@ function AuthPage({ onLogged }) {
          }
          signInInput.current.type = 'password';
          signUpInput.current.type = 'password';
-    }
+    };
 
     const handleInput = (e) => {
         if (e.target.value){
@@ -74,7 +73,7 @@ function AuthPage({ onLogged }) {
             signInInput.current.type = 'password';
             signUpInput.current.type = 'password';
         }
-    }
+    };
 
     const handleShowInput = () => {
         if (signInInput.current || signUpInput.current){
@@ -86,44 +85,71 @@ function AuthPage({ onLogged }) {
                 signUpInput.current.type = 'password';
             }
         }
-    }
+    };
+
+    const redirect = (value) => {
+        if (value){
+            onLogged(true);
+            navigate('/home');
+        }else{
+            onLogged(false);
+            navigate('/auth-page');
+        }
+    };
+
+    const handleSignIn = () => {
+        signInWithEmailAndPassword(auth, signInEmail, signInPassword).then((userCredential) => {
+            const user = userCredential.user;
+            redirect(true);
+        })
+        .catch((error) => {
+            console.error(error);
+            alert(error.message);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            redirect(false);
+        });
+    };
+
+    const handleSignUp = () => {
+        createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword).then((userCredential) => {
+            const user = userCredential.user;
+            redirect(true);
+        })
+        .catch((error) => {
+            redirect(false);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+    };
+
+    const handleSignOut = () => {
+        signOut(auth).then(() => {
+
+        }).catch((error) => {
+
+        });
+    };
 
     useEffect(() => {
-        auth.onAuthStateChanged(function(user) {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
                 setIsLogged(true);
+                const uid = user.uid;
             } else {
                 setIsLogged(false);
-                navigate('/');
             }
         });
+
+        handleSignOut();
     },[]);
 
     const handleSubmitForm = (e) => {
-        if (isLogged){
-            navigate('/home');
-        }else{
-            navigate('/');
-        }
-
+        e.preventDefault();
         if (e.target.id === 'sign-up'){
-            createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword).then((userCredential) => {
-                const user = userCredential.user;
-            })
-            .catch((error) => {
-                console.log(error);
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
+            handleSignUp();
         }else{
-            signInWithEmailAndPassword(auth, signInEmail, signInPassword).then((userCredential) => {
-                const user = userCredential.user;
-            })
-            .catch((error) => {
-                console.log(error);
-                const errorCode = error.code;
-                const errorMessage = error.message;
-            });
+            handleSignIn();
         }
         setSignInEmail('');
         setSignInPassword('');
@@ -152,7 +178,7 @@ function AuthPage({ onLogged }) {
                         <input id="btn-check1" type="checkbox" required/>
                         <label htmlFor="btn-check1">Eu concordo com os <span>Termos & Serviços</span></label>
                     </div>
-                    <button type="submit">Enviar</button>
+                    <button>Enviar</button>
                 </form>
             </section>
 
@@ -175,7 +201,7 @@ function AuthPage({ onLogged }) {
                         <input id="btn-check2" type="checkbox" required/>
                         <label htmlFor="btn-check2">Eu concordo com os <span>Termos & Serviços</span></label>
                     </div>
-                    <button type="submit">Entrar</button>
+                    <button>Entrar</button>
                 </form>
             </section>
 

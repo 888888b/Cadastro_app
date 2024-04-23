@@ -1,10 +1,11 @@
 import { FiMenu } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function Menu() {
     const navigate = useNavigate(undefined);
     const [menuActive, setMenuActive] = useState('disable');
+    const backgroundMenuRef = useRef(undefined);
 
     const handleNavigate = (e) => {
         navigate(`/${e.target.id}`);
@@ -13,13 +14,16 @@ function Menu() {
     const handleMenuActive = () => {
         if (menuActive === 'menu-active'){
             setMenuActive('disable');
+            backgroundMenuRef.current.style.height = '105%';
         }else{
             setMenuActive('menu-active');
+            backgroundMenuRef.current.style.height = '0%';
         }  
     }
 
     return(
         <div className={`menu-container ${menuActive}`}>
+            <div ref={backgroundMenuRef} className="background-hide-menu"></div>
             <div className="menu-icon-box">
                 <FiMenu onClick={handleMenuActive} className="menu-icon"/>
             </div>

@@ -75,13 +75,13 @@ header ul li:first-child{
 }
 
 header ul li, header h1, .homepage h1, .cadastros-page h1, .profile-page h1{
-  font: 400 19px 'Poppins',helvetica, sans-serif;
+  font: 400 17px 'Poppins',helvetica, sans-serif;
   cursor: pointer;
   color: var(--white);
 }
 
 header h1{
-  font-size: 21px;
+  font-size: 18px;
   cursor: auto;
 }
 
@@ -192,6 +192,7 @@ header h1{
   animation: fadeUp .4s ease-in-out;
   font-family: 'Roboto';
   padding: 6px 30px;
+  font-size: 15px;
 }
 
 .auth-page .auth-form form{
@@ -215,7 +216,7 @@ header h1{
 
 .auth-page form label{
   color: var(--white-opacity-09);
-  font: 500 17px 'Poppins', 'Roboto',sans-serif;
+  font: 500 16px 'Poppins', 'Roboto',sans-serif;
 }
 
 .auth-page form .input-box{
@@ -245,7 +246,7 @@ header h1{
 .auth-page form input{
   color: var(--white);
   width: 100%;
-  background-color: var(--transparent);
+  background-color: var(--medium-blue) !important;
   padding: 5px;
   border: none;
   border-bottom: 1pt solid var(--white-opacity-07);
@@ -254,7 +255,11 @@ header h1{
 }
 
 .auth-page form input::placeholder{
-  font-size: 0.95em;
+  font-size: 0.93em;
+}
+
+.auth-page form input:focus{
+  background-color: var(--medium-blue);
 }
 
 .auth-page form .check-box{
@@ -263,7 +268,7 @@ header h1{
 }
 
 .auth-page form .check-box input{
-  width: 15px;
+  width: 14px;
 }
 
 .auth-page form .check-box label{
@@ -370,14 +375,11 @@ header h1{
     background-color: var(--white);
   }
 
-  
-
-  .menu-container::before{
-    content: '';
+  .menu-container .background-hide-menu{
     width: 100%;
-    height: 110%;
+    height: 105%;
     position: absolute;
-    top: 0;
+    bottom: -5px;
     z-index: 2;
     left: 0;
     background-color: var(--medium-blue);
@@ -388,8 +390,8 @@ header h1{
     width: 40px;
     height: 35px;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 25px;
+    right: 25px;
     color: var(--white);
     background-color: gray;
     font-size: 30px;
@@ -418,7 +420,9 @@ header h1{
     font: 500 16px 'Roboto', 'Poppins', sans-serif;
     color: var(--black);
     border: none;
-    padding-bottom: 5px;
+    padding: 5px 0px;
+    display: flex;
+    align-items: center;
     border-bottom: 1pt solid rgb(0, 0, 0, 0.1);
   }
 

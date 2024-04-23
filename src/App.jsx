@@ -10,12 +10,15 @@ import AuthPage from './components/authPage.jsx';
 import Menu from './components/mobileMenu.jsx'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleChangeValue = (e) => {
+    setIsLoggedIn(e);
+  }
 
   return (
       <Router>
           <Routes>
-            <Route path='/' element={<AuthPage/>} />
+            <Route path='/' element={<AuthPage onLogged={handleChangeValue}/>} />
             <Route path='*' element={isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to='/'/>} />
           </Routes>
       </Router>
