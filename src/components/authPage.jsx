@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { FaRegUser } from "react-icons/fa";
 import { RiLock2Line } from "react-icons/ri";
+import { FcGoogle } from "react-icons/fc";
+import { BsFacebook } from "react-icons/bs";
 
 function AuthPage({onLogged}) {
     const mainRef = useRef(undefined);
@@ -21,6 +23,7 @@ function AuthPage({onLogged}) {
     const [isLogged, setIsLogged] = useState(false);
     let formType = 'sign-in';
     const navigate = useNavigate(undefined);
+    const provider = new GoogleAuthProvider();
 
     const firebaseConfig = {
         apiKey: "AIzaSyBtuIzYiWYVg7j55olwUasnBSxS0ZOYEyo",
@@ -138,6 +141,10 @@ function AuthPage({onLogged}) {
         });
     };
 
+    const handleSignInGoogle = () => {
+        signInWithRedirect(auth, provider);
+    }
+
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword).then((userCredential) => {
             const user = userCredential.user;
@@ -168,6 +175,20 @@ function AuthPage({onLogged}) {
             }
         });
 
+        getRedirectResult(auth).then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                const user = result.user;
+                redirect(true);
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const email = error.customData.email;
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                redirect(false);
+            }
+        );
+
         handleSignOut();
     },[]);
 
@@ -187,75 +208,109 @@ function AuthPage({onLogged}) {
     return(
         <main ref={mainRef} className="auth-page">
             <section className="sign-up-form auth-form">
-                <button className="change-form-btns" onClick={handleChangeForm}>Entrar</button>
-                <form id="sign-up" onSubmit={handleSubmitForm}>
-                    <h2>Cadastro</h2>
-                    <div className="email-input-box">
-                        <label htmlFor="sign-up-email">Email</label>
-                        <div className="input-box">
-                            <FaRegUser className={`user-icon ${userIconActive}`}/>
-                            <input
-                                className="email"
-                                id="sign-up-email" 
-                                type="text" 
-                                placeholder="Digite seu email" 
-                                onChange={handleEmailInput}
-                                required/>
+                <div className="container-form">
+                    <form id="sign-up" onSubmit={handleSubmitForm}>
+                        <h2>Cadastro</h2>
+                        <div className="email-input-box">
+                            <label htmlFor="sign-up-email">Email</label>
+                            <div className="input-box">
+                                <FaRegUser className={`user-icon ${userIconActive}`}/>
+                                <input
+                                    className="email"
+                                    id="sign-up-email"
+                                    type="text"
+                                    placeholder="Digite seu email"
+                                    onChange={handleEmailInput}
+                                    required/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="password-input-box">
-                        <label htmlFor="sign-up-password">Senha</label>
-                        <div className="input-box">
-                            <RiLock2Line className={`lock-icon ${lockIconActive}`}/>
-                            <FaRegEyeSlash onClick={handleShowInput} className={`show-icon ${showBtnActive}`}/>
-                            <input  className="password" type="password" id="sign-up-password" placeholder="Crie uma senha" onChange={handleInput} ref={signPasswordRef} required />
+                        <div className="password-input-box">
+                            <label htmlFor="sign-up-password">Senha</label>
+                            <div className="input-box">
+                                <RiLock2Line className={`lock-icon ${lockIconActive}`}/>
+                                <FaRegEyeSlash onClick={handleShowInput} className={`show-icon ${showBtnActive}`}/>
+                                <input  className="password" type="password" id="sign-up-password" placeholder="Crie uma senha" onChange={handleInput} ref={signPasswordRef} required />
+                            </div>
                         </div>
+                        <div className="check-box">
+                            <input id="btn-check1" type="checkbox" required/>
+                            <label htmlFor="btn-check1">Eu concordo com os <span>Termos & Serviços</span></label>
+                        </div>
+                        <button className="btn-submit">Enviar</button>
+                    </form>
+
+                    <div className="form-division">
+                        <div id="line"></div>
+                        <h3>Ou</h3>
                     </div>
-                    <div className="check-box">
-                        <input id="btn-check1" type="checkbox" required/>
-                        <label htmlFor="btn-check1">Eu concordo com os <span>Termos & Serviços</span></label>
+                    <div className="Other-authentications-form">
+                        <button>
+                            <FcGoogle onClick={handleSignInGoogle} className='google-icon'/>
+                        </button>
+                        <button>
+                            <BsFacebook className="facebook-icon"/>
+                        </button>
                     </div>
-                    <button>Enviar</button>
-                </form>
+                    <div className="account-exist">
+                        <p>Ja tem uma conta ? <span onClick={handleChangeForm}>Entrar</span></p>
+                    </div>
+                </div>
             </section>
 
             <section className="sign-in-form auth-form">
-                <button className="change-form-btns" onClick={handleChangeForm}>Cadastro</button>
-                <form id="sign-in" onSubmit={handleSubmitForm}>
-                    <h2>Entrar</h2>
-                    <div className="email-input-box">
-                        <label htmlFor="sign-in-email">Email</label>
-                        <div className="input-box">
-                            <FaRegUser className={`user-icon ${userIconActive}`}/>
-                            <input 
-                                className="email" 
-                                id="sign-in-email" 
-                                type="text" 
-                                placeholder="Digite seu email" 
-                                onChange={handleEmailInput}
-                                required/>
+                <div className="container-form">
+                    <form id="sign-in" onSubmit={handleSubmitForm}>
+                        <h2>Entrar</h2>
+                        <div className="email-input-box">
+                            <label htmlFor="sign-in-email">Email</label>
+                            <div className="input-box">
+                                <FaRegUser className={`user-icon ${userIconActive}`}/>
+                                <input
+                                    className="email"
+                                    id="sign-in-email"
+                                    type="text"
+                                    placeholder="Digite seu email"
+                                    onChange={handleEmailInput}
+                                    required/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="password-input-box">
-                        <label htmlFor="sign-in-password">Senha</label>
-                        <div className="input-box">
-                            <RiLock2Line className={`lock-icon ${lockIconActive}`}/>
-                            <FaRegEyeSlash onClick={handleShowInput} className={`show-icon ${showBtnActive}`}/>
-                            <input className="password" type="password" id="sign-in-password" placeholder="Digite sua senha" onChange={handleInput} ref={loginPasswordRef} required/>
+                        <div className="password-input-box">
+                            <label htmlFor="sign-in-password">Senha</label>
+                            <div className="input-box">
+                                <RiLock2Line className={`lock-icon ${lockIconActive}`}/>
+                                <FaRegEyeSlash onClick={handleShowInput} className={`show-icon ${showBtnActive}`}/>
+                                <input className="password" type="password" id="sign-in-password" placeholder="Digite sua senha" onChange={handleInput} ref={loginPasswordRef} required/>
+                            </div>
                         </div>
+                        <div className="check-box">
+                            <input id="btn-check2" type="checkbox"/>
+                            <label htmlFor="btn-check2">Manter me <span>conectado</span></label>
+                        </div>
+                        <button>Entrar</button>
+                    </form>
+
+                    <div className="form-division">
+                        <div id="line"></div>
+                        <h3>Ou</h3>
                     </div>
-                    <div className="check-box">
-                        <input id="btn-check2" type="checkbox" required/>
-                        <label htmlFor="btn-check2">Manter me <span>conectado</span></label>
+                    <div className="Other-authentications-form">
+                        <button>
+                            <FcGoogle onClick={handleSignInGoogle} className='google-icon'/>
+                        </button>
+                        <button>
+                            <BsFacebook className="facebook-icon"/>
+                        </button>
                     </div>
-                    <button>Entrar</button>
-                </form>
+                    <div className="account-exist">
+                        <p>Não tem uma conta ? <span onClick={handleChangeForm}>Criar</span></p>
+                    </div>
+                </div>
             </section>
 
             <section className="page-text-area">
                 <div className="text-center">
                     <h1>Bem Vindo !</h1>
-                    <h2>Esta é a nossa área de login e cadastro. Se já possui uma conta, basta entrar; caso contrário, siga para a área de cadastro.</h2>
+                    <p>Esta é a nossa área de login e cadastro. Se já possui uma conta, basta entrar, caso contrário, siga para a área de cadastro.</p>
                 </div>
             </section>
         </main>
