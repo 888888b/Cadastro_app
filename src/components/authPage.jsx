@@ -3,16 +3,20 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+import { FaRegUser } from "react-icons/fa";
+import { RiLock2Line } from "react-icons/ri";
 
 function AuthPage({onLogged}) {
     const mainRef = useRef(undefined);
-    const signInInput = useRef(undefined);
-    const signUpInput = useRef(undefined);
+    const loginPasswordRef = useRef(undefined);
+    const signPasswordRef = useRef(undefined);
     const [signUpEmail, setSignUpEmail] = useState(undefined);
     const [signUpPassword, setSignUpPassword] = useState(undefined);
     const [signInEmail, setSignInEmail] = useState(undefined);
     const [signInPassword, setSignInPassword] = useState(undefined);
     const [showBtnActive, setShowBtnActive] = useState('disable');
+    const [lockIconActive, setLockIconActive] = useState('lock-icon-active');
+    const [userIconActive, setUserIconActive] = useState('user-icon-active');
     let children = undefined;
     const [isLogged, setIsLogged] = useState(false);
     let formType = 'sign-in';
@@ -56,33 +60,56 @@ function AuthPage({onLogged}) {
             children[1].style.opacity = 1;  
             formType = 'sign-in';  
          }
-         signInInput.current.type = 'password';
-         signUpInput.current.type = 'password';
+         loginPasswordRef.current.type = 'password';
+         signPasswordRef.current.type = 'password';
     };
 
     const handleInput = (e) => {
         if (e.target.value){
             setShowBtnActive('active');
-            if (e.target.id === 'sign-up-password'){
-                setSignUpPassword(e.target.value);
-            }else{
-                setSignInPassword(e.target.value);
+            if (e.target.className === 'password'){
+                setLockIconActive('lock-icon-disabled')
+                if (e.target.id === 'sign-up-password'){
+                    setSignUpPassword(e.target.value);
+                }
+                else{
+                    setSignInPassword(e.target.value);
+                }
             }
         }else{
             setShowBtnActive('disable');
-            signInInput.current.type = 'password';
-            signUpInput.current.type = 'password';
+            setLockIconActive('lock-icon-active');
+            loginPasswordRef.current.type = 'password';
+            signPasswordRef.current.type = 'password';
         }
     };
 
+    const handleEmailInput = (e) => {
+        if (e.target.id === 'sign-in-email'){
+            setSignInEmail(e.target.value);
+            if (e.target.value){
+                setUserIconActive('user-icon-disabled')
+            } else{
+                setUserIconActive('user-icon-active')
+            }
+        }else{
+            setSignUpEmail(e.target.value);
+            if (e.target.value){
+                setUserIconActive('user-icon-disabled')
+            } else{
+                setUserIconActive('user-icon-active')
+            }
+        }
+    }
+
     const handleShowInput = () => {
-        if (signInInput.current || signUpInput.current){
-            if (signUpInput.current.type === 'password' || signInInput.current.type === 'password'){
-                signInInput.current.type = 'text';
-                signUpInput.current.type = 'text';
+        if (loginPasswordRef.current || signPasswordRef.current){
+            if (signPasswordRef.current.type === 'password' || loginPasswordRef.current.type === 'password'){
+                loginPasswordRef.current.type = 'text';
+                signPasswordRef.current.type = 'text';
             }else{
-                signInInput.current.type = 'password';
-                signUpInput.current.type = 'password';
+                loginPasswordRef.current.type = 'password';
+                signPasswordRef.current.type = 'password';
             }
         }
     };
@@ -165,13 +192,23 @@ function AuthPage({onLogged}) {
                     <h2>Cadastro</h2>
                     <div className="email-input-box">
                         <label htmlFor="sign-up-email">Email</label>
-                        <input id="sign-up-email" type="text" placeholder="Digite seu email" onChange={(e) => {setSignUpEmail(e.target.value)}} required/>
+                        <div className="input-box">
+                            <FaRegUser className={`user-icon ${userIconActive}`}/>
+                            <input
+                                className="email"
+                                id="sign-up-email" 
+                                type="text" 
+                                placeholder="Digite seu email" 
+                                onChange={handleEmailInput}
+                                required/>
+                        </div>
                     </div>
                     <div className="password-input-box">
                         <label htmlFor="sign-up-password">Senha</label>
                         <div className="input-box">
+                            <RiLock2Line className={`lock-icon ${lockIconActive}`}/>
                             <FaRegEyeSlash onClick={handleShowInput} className={`show-icon ${showBtnActive}`}/>
-                            <input type="password" id="sign-up-password" placeholder="Crie uma senha" onChange={handleInput} ref={signUpInput} required />
+                            <input  className="password" type="password" id="sign-up-password" placeholder="Crie uma senha" onChange={handleInput} ref={signPasswordRef} required />
                         </div>
                     </div>
                     <div className="check-box">
@@ -188,18 +225,28 @@ function AuthPage({onLogged}) {
                     <h2>Entrar</h2>
                     <div className="email-input-box">
                         <label htmlFor="sign-in-email">Email</label>
-                        <input id="sign-in-email" type="text" placeholder="Digite seu email" onChange={(e) => {setSignInEmail(e.target.value)}} required/>
+                        <div className="input-box">
+                            <FaRegUser className={`user-icon ${userIconActive}`}/>
+                            <input 
+                                className="email" 
+                                id="sign-in-email" 
+                                type="text" 
+                                placeholder="Digite seu email" 
+                                onChange={handleEmailInput}
+                                required/>
+                        </div>
                     </div>
                     <div className="password-input-box">
                         <label htmlFor="sign-in-password">Senha</label>
                         <div className="input-box">
+                            <RiLock2Line className={`lock-icon ${lockIconActive}`}/>
                             <FaRegEyeSlash onClick={handleShowInput} className={`show-icon ${showBtnActive}`}/>
-                            <input type="password" id="sign-in-password" placeholder="Digite sua senha" onChange={handleInput} ref={signInInput} required/>
+                            <input className="password" type="password" id="sign-in-password" placeholder="Digite sua senha" onChange={handleInput} ref={loginPasswordRef} required/>
                         </div>
                     </div>
                     <div className="check-box">
                         <input id="btn-check2" type="checkbox" required/>
-                        <label htmlFor="btn-check2">Eu concordo com os <span>Termos & Serviços</span></label>
+                        <label htmlFor="btn-check2">Manter me <span>conectado</span></label>
                     </div>
                     <button>Entrar</button>
                 </form>

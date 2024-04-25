@@ -224,11 +224,12 @@ header h1{
   position: relative;
 }
 
-.auth-page form .input-box .show-icon{
+
+.auth-page form .input-box .show-icon, .auth-page form .input-box .lock-icon, .auth-page form .input-box .user-icon{
   color: var(--white-opacity-07);
   background-color: var(--transparent);
   position: absolute;
-  font-size: 20px;
+  font-size: 15px;
   height: 100%;
   top: 50%;
   right: 20px;
@@ -239,23 +240,58 @@ header h1{
   transition: all .2s ease-in-out;
 }
 
+.auth-page form .input-box .lock-icon{
+  left: 5px;
+  opacity: 1;
+  font-size: 18px;
+  cursor: auto;
+  z-index: 1;
+  transition: all 0s ease-in-out;
+  color: var(--white-opacity-07);
+}
+
+.auth-page form .input-box .user-icon{
+  color: var(--white-opacity-07);
+  left: 5px;
+  opacity: 1;
+  cursor: auto;
+  z-index: 1;
+  transition: all 0s ease-in-out;
+  font-size: 14px;
+}
+
+.auth-page form .input-box .show-icon{
+  color: var(--white-opacity-07);
+  font-size: 17px;
+}
+
 .auth-page form .input-box .active{
   opacity: 1;
+}
+
+.auth-page form .input-box .lock-icon-disabled{
+  opacity: 0;
+}
+
+.auth-page form .input-box .user-icon-disabled{
+  opacity: 0;
 }
 
 .auth-page form input{
   color: var(--white);
   width: 100%;
-  background-color: var(--medium-blue) !important;
+  background-color: var(--transparent);
   padding: 5px;
   border: none;
   border-bottom: 1pt solid var(--white-opacity-07);
   outline: none;
-  font: 500 16px 'Poppins', 'Roboto',sans-serif;
+  font: 400 16px 'Poppins', 'Roboto',sans-serif;
 }
 
 .auth-page form input::placeholder{
-  font-size: 0.93em;
+  font-size: 14px;
+  padding-left: 25px;
+  color: var(--white-opacity-07);
 }
 
 .auth-page form input:focus{
@@ -264,23 +300,35 @@ header h1{
 
 .auth-page form .check-box{
   flex-direction: row;
+  align-items: flex-start;
   gap: 10px;
 }
 
 .auth-page form .check-box input{
   width: 14px;
+  margin-top: 5px;
 }
 
 .auth-page form .check-box label{
   font-size: 15px;
+  font-weight: 400;
   color: var(--white-opacity-09);
 }
 
 .auth-page form .check-box label span{
   color: var(--blue);
-  text-decoration: underline;
   cursor: pointer;
-  font-family: 'Montserrat',helvetica, sans-serif;
+  position: relative;
+}
+
+.auth-page form .check-box label span::before{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom: 1pt solid var(--blue);
 }
 
 .auth-page form button{
@@ -453,9 +501,30 @@ header h1{
   .cadastros-page h1, .profile-page h1, .homepage h1{
     font-size: 1.5em;
   }
+
+  .auth-page form{
+    width: 87%;
+    max-width: 87%;
+  }
   
   .auth-page form .input-box .show-icon{
     right: 5px;
+  }
+
+  .auth-page form  label{
+    font-size: 19px;
+  }
+
+  .auth-page form .input-box input{
+    font-size: 16px;
+  }
+
+  .auth-page form .input-box input::placeholder{
+    font-size: 16px;
+  }
+
+  .auth-page form .check-box label{
+    font-size: 17px;  
   }
 
 }
