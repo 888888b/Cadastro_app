@@ -247,11 +247,11 @@ header h1{
   cursor: auto;
   z-index: 1;
   transition: all 0s ease-in-out;
-  color: var(--white-opacity-07);
+  color: rgb(255, 255, 255, 0.55);
 }
 
 .auth-page form .input-box .user-icon{
-  color: var(--white-opacity-07);
+  color: rgb(255, 255, 255, 0.55);
   left: 5px;
   opacity: 1;
   cursor: auto;
@@ -291,7 +291,7 @@ header h1{
 .auth-page form input::placeholder{
   font-size: 14px;
   padding-left: 25px;
-  color: rgb(255, 255, 255, 0.6);
+  color: rgb(255, 255, 255, 0.55);
 }
 
 .auth-page form input:focus{
