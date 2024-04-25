@@ -283,7 +283,7 @@ header h1{
   background-color: var(--transparent);
   padding: 5px;
   border: none;
-  border-bottom: 1pt solid var(--white-opacity-07);
+  border-bottom: 1pt solid rgb(255, 255, 255, 0.6);
   outline: none;
   font: 400 16px 'Poppins', 'Roboto',sans-serif;
 }
@@ -291,7 +291,7 @@ header h1{
 .auth-page form input::placeholder{
   font-size: 14px;
   padding-left: 25px;
-  color: var(--white-opacity-07);
+  color: rgb(255, 255, 255, 0.6);
 }
 
 .auth-page form input:focus{
