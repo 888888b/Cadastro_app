@@ -244,8 +244,8 @@ function AuthPage({onLogged}) {
                         <h3>Ou</h3>
                     </div>
                     <div className="Other-authentications-form">
-                        <button>
-                            <FcGoogle onClick={handleSignInGoogle} className='google-icon'/>
+                        <button onClick={handleSignInGoogle}>
+                            <FcGoogle className='google-icon'/>
                         </button>
                         <button>
                             <BsFacebook className="facebook-icon"/>
@@ -294,8 +294,8 @@ function AuthPage({onLogged}) {
                         <h3>Ou</h3>
                     </div>
                     <div className="Other-authentications-form">
-                        <button>
-                            <FcGoogle onClick={handleSignInGoogle} className='google-icon'/>
+                        <button onClick={handleSignInGoogle}>
+                            <FcGoogle  className='google-icon'/>
                         </button>
                         <button>
                             <BsFacebook className="facebook-icon"/>

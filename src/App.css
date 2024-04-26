@@ -179,7 +179,7 @@ header h1{
 
 .auth-page .container-form{
   min-width: 70%;
-  animation: fadeUp .4s ease-in-out;
+  animation: fadeUp .3s ease-in-out;
 }
 
 .auth-page .auth-form form{
@@ -428,7 +428,7 @@ header h1{
 .page-text-area .text-center{
   width: 50%;
   min-width: 500px;
-  animation: fadeUp .4s ease-in-out;
+  animation: fadeUp .3s ease-in-out;
 }
 
 .page-text-area .text-center h1{
