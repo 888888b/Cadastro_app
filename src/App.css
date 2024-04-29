@@ -390,7 +390,8 @@ header h1{
 }
 
 .auth-page .container-form .Other-authentications-form button:nth-child(2){
-  background-color: var(--blue);
+  background-color: var(--black);
+  border: 1pt solid var(--white);
 }
 
 .auth-page .Other-authentications-form .facebook-icon{
@@ -579,6 +580,7 @@ header h1{
   .auth-page .container-form{
     width: 85%;
     max-width: 87%;
+    animation: fadeUp .2s ease-in-out;
   }
   
   .auth-page form .input-box .show-icon{

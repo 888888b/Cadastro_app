@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithRedirect, getRedirectResult, GithubAuthProvider } from "firebase/auth";
 import { FaRegUser } from "react-icons/fa";
 import { RiLock2Line } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-import { BsFacebook } from "react-icons/bs";
+import { FaGithub } from "react-icons/fa";
 
 function AuthPage({onLogged}) {
     const mainRef = useRef(undefined);
@@ -24,6 +24,7 @@ function AuthPage({onLogged}) {
     let formType = 'sign-in';
     const navigate = useNavigate(undefined);
     const provider = new GoogleAuthProvider();
+    const providerGitHub = new GithubAuthProvider();
 
     const firebaseConfig = {
         apiKey: "AIzaSyBtuIzYiWYVg7j55olwUasnBSxS0ZOYEyo",
@@ -145,6 +146,10 @@ function AuthPage({onLogged}) {
         signInWithRedirect(auth, provider);
     }
 
+    const handleSignInGitHub = () => {
+        signInWithRedirect(auth, providerGitHub);
+    }
+
     const handleSignUp = () => {
         createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword).then((userCredential) => {
             const user = userCredential.user;
@@ -152,6 +157,7 @@ function AuthPage({onLogged}) {
         })
         .catch((error) => {
             redirect(false);
+            alert(error.message);
             const errorCode = error.code;
             const errorMessage = error.message;
         });
@@ -175,20 +181,42 @@ function AuthPage({onLogged}) {
             }
         });
 
-        getRedirectResult(auth).then((result) => {
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                const user = result.user;
-                redirect(true);
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.customData.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                redirect(false);
-            }
-        );
+        const handleAuthResult = () => {
+            getRedirectResult(auth).then((result) => {
+                    const credential = GoogleAuthProvider.credentialFromResult(result);
+                    const token = credential.accessToken;
+                    const user = result.user;
+                    redirect(true);
+                }).catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    const email = error.customData.email;
+                    const credential = GoogleAuthProvider.credentialFromError(error);
+                    redirect(false);
+                }
+            );
+        };
 
+        const handleAuthResultGit = () => {
+            getRedirectResult(auth).then((result) => {
+              const credential = GithubAuthProvider.credentialFromResult(result);
+              if (credential) {
+                const token = credential.accessToken;
+              }
+              const user = result.user;
+              redirect(true);
+            }).catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              const email = error.customData.email;
+              const credential = GithubAuthProvider.credentialFromError(error);
+              redirect(false);
+            });
+          
+        }
+
+        handleAuthResultGit();
+        handleAuthResult();
         handleSignOut();
     },[]);
 
@@ -247,8 +275,8 @@ function AuthPage({onLogged}) {
                         <button onClick={handleSignInGoogle}>
                             <FcGoogle className='google-icon'/>
                         </button>
-                        <button>
-                            <BsFacebook className="facebook-icon"/>
+                        <button onClick={handleSignInGitHub}>
+                            <FaGithub className="facebook-icon"/>
                         </button>
                     </div>
                     <div className="account-exist">
@@ -297,8 +325,8 @@ function AuthPage({onLogged}) {
                         <button onClick={handleSignInGoogle}>
                             <FcGoogle  className='google-icon'/>
                         </button>
-                        <button>
-                            <BsFacebook className="facebook-icon"/>
+                        <button onClick={handleSignInGitHub}>
+                            <FaGithub className="facebook-icon"/>
                         </button>
                     </div>
                     <div className="account-exist">
