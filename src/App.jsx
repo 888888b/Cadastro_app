@@ -11,29 +11,34 @@ import Menu from './components/mobileMenu.jsx'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userDat, setUserDat] = useState(undefined);
   const handleChangeValue = (e) => {
     setIsLoggedIn(e);
+  }
+
+  const handleUserDat = (e) => {
+    setUserDat(e);
   }
 
   return (
       <Router>
           <Routes>
-            <Route path='/' element={<AuthPage onLogged={handleChangeValue}/>} />
-            <Route path='*' element={isLoggedIn ? <AuthenticatedRoutes /> : <Navigate to='/'/>} />
+            <Route path='/' element={<AuthPage onLogged={handleChangeValue} userDat={handleUserDat}/>} />
+            <Route path='*' element={isLoggedIn ? <AuthenticatedRoutes userDatValue={userDat}/> : <Navigate to='/'/>} />
           </Routes>
       </Router>
   );
 }
 
-function AuthenticatedRoutes() {
+function AuthenticatedRoutes({userDatValue}) {
   return(
     <>
-      <Header/>
+      <Header userDat={userDatValue}/>
       <Menu/>
       <Routes>
           <Route path='/home' element={<Home/>}/>
           <Route path='/usuarios' element={<Cadastros />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile' element={<Profile userDat={userDatValue}/>} />
           <Route path='/auth-page' element={<Navigate to="/" />} />
       </Routes>
     </>

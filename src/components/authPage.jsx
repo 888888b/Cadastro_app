@@ -8,7 +8,7 @@ import { RiLock2Line } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
-function AuthPage({onLogged}) {
+function AuthPage({onLogged, userDat}) {
     const mainRef = useRef(undefined);
     const loginPasswordRef = useRef(undefined);
     const signPasswordRef = useRef(undefined);
@@ -163,11 +163,14 @@ function AuthPage({onLogged}) {
         });
     };
 
+    const getUserDat = (dat) => {
+        userDat(dat);
+    }
+
     const handleSignOut = () => {
         signOut(auth).then(() => {
-
+            setUserDat(undefined);
         }).catch((error) => {
-
         });
     };
 
@@ -176,12 +179,13 @@ function AuthPage({onLogged}) {
             if (user) {
                 setIsLogged(true);
                 const uid = user.uid;
+                getUserDat(user);
             } else {
                 setIsLogged(false);
             }
         });
 
-        const handleAuthResult = () => {
+        const handleAuthResult =  () => {
             getRedirectResult(auth).then((result) => {
                     const credential = GoogleAuthProvider.credentialFromResult(result);
                     const token = credential.accessToken;
@@ -197,7 +201,7 @@ function AuthPage({onLogged}) {
             );
         };
 
-        const handleAuthResultGit = () => {
+        const handleAuthResultGit =  () => {
             getRedirectResult(auth).then((result) => {
               const credential = GithubAuthProvider.credentialFromResult(result);
               if (credential) {

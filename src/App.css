@@ -86,6 +86,7 @@ header ul li, header h1, .homepage h1, .cadastros-page h1, .profile-page h1{
 header h1{
   font-size: 18px;
   cursor: auto;
+  font-weight: 600;
 }
 
 .homepage, .cadastros-page, .profile-page, .auth-page{
@@ -454,6 +455,66 @@ header h1{
   margin-top: 20px;
 }
 
+
+.profile-page .user-section{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  padding: 50px 30px;
+  background-color: rgb(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+.profile-page .user-section h1{
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font: 500 20px 'Poppins', sans-serif;
+}
+
+.profile-page .profile-user-image img{
+  border-radius: 50%;
+  width: 190px;
+  height: 190px;
+}
+
+.profile-page .profile-user-image .user-icon{
+  font-size: 190px;
+  color: var(--white-opacity-07);
+}
+
+.profile-page .profile-user-details{
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
+.profile-page .user-info-box{
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.profile-page .user-info-box label{
+  color: var(--white);
+  font: 500 15px 'Poppins', sans-serif;
+}
+
+.profile-page .user-info-box .user-information{
+  min-width: 250px;
+  padding-bottom: 2px;
+  border-bottom: 1pt solid rgb(255, 255, 255, 0.1);
+}
+
+.profile-page .user-info-box h2{
+  color: var(--white-opacity-06);
+  font: 400 16px 'Roboto', sans-serif;
+}
+
+
 @media screen and (max-width: 1080px){
   .auth-page .auth-form{
     width: 100%;
@@ -472,6 +533,7 @@ header h1{
   }
 
 }
+
 
 @media screen and (max-width: 600px){
   header{
@@ -609,6 +671,21 @@ header h1{
 
   .auth-page .container-form .account-exist p{
     font-size: 15px;
+  }
+
+  .profile-page .user-section{
+    flex-direction: column;
+    border-radius: 10px;
+  }
+
+  .profile-page .profile-user-image img{
+    width: 150px;
+    height: 150px;
+  }
+  
+  .profile-page .profile-user-image .user-icon{
+    font-size: 150px;
+    color: var(--white-opacity-07);
   }
 
 }

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function Header() {
+function Header({userDat}) {
     const pagesRef = useRef(undefined);
     const navigate = useNavigate(undefined);
     let children = undefined;
@@ -30,7 +30,11 @@ function Header() {
 
     return(
         <header>
-            <h1>Nome</h1>
+            {userDat.displayName ? (
+                <h1>{userDat.displayName}</h1>
+            ): (
+                <h1>Nome</h1>
+            )}
             <nav>
                 <ul ref={pagesRef}>
                     <li id='home' onClick={handleNavigate}>Home</li>
