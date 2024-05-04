@@ -7,6 +7,7 @@ import { FaRegUser } from "react-icons/fa";
 import { RiLock2Line } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { parse } from 'date-fns';
 
 function AuthPage({onLogged, userDat}) {
     const mainRef = useRef(undefined);
@@ -49,6 +50,38 @@ function AuthPage({onLogged, userDat}) {
     };
 
     getRef();
+
+    const fetchData = async (e) => {
+        if(e){
+            var email = e.email;
+            var created = e.metadata.creationTime;
+        }
+        try{
+            const response = await fetch('http://localhost:50100/user',
+                {method:'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({email, created}),
+            });
+
+            if (response.ok){
+                const data = await response.json();
+                if (data){
+                    console.log(data);
+                }
+            }else{
+                setTimeout(() => {
+                    fetchData();
+                }, 2000);
+            }
+            
+        }
+
+        catch (error){
+            console.error(error);
+        }
+    };
 
     const handleChangeForm = () => {
         if (formType === 'sign-in'){
@@ -163,13 +196,12 @@ function AuthPage({onLogged, userDat}) {
         });
     };
 
-    const getUserDat = (dat) => {
-        userDat(dat);
+    const getUserDat = (data) => {
+        userDat(data);
     }
 
     const handleSignOut = () => {
         signOut(auth).then(() => {
-            setUserDat(undefined);
         }).catch((error) => {
         });
     };
@@ -180,6 +212,7 @@ function AuthPage({onLogged, userDat}) {
                 setIsLogged(true);
                 const uid = user.uid;
                 getUserDat(user);
+                fetchData(user);
             } else {
                 setIsLogged(false);
             }
