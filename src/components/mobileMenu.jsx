@@ -14,7 +14,7 @@ function Menu() {
     const handleMenuActive = () => {
         if (menuActive === 'menu-active'){
             setMenuActive('disable');
-            backgroundMenuRef.current.style.height = '105%';
+            backgroundMenuRef.current.style.height = '100%';
         }else{
             setMenuActive('menu-active');
             backgroundMenuRef.current.style.height = '0%';
