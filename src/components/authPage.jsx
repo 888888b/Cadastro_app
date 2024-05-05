@@ -12,7 +12,9 @@ import { parse } from 'date-fns';
 function AuthPage({onLogged, userDat}) {
     const mainRef = useRef(undefined);
     const loginPasswordRef = useRef(undefined);
+    const loginEmailRef = useRef(undefined);
     const signPasswordRef = useRef(undefined);
+    const signEmailRef = useRef(undefined);
     const [signUpEmail, setSignUpEmail] = useState(undefined);
     const [signUpPassword, setSignUpPassword] = useState(undefined);
     const [signInEmail, setSignInEmail] = useState(undefined);
@@ -20,6 +22,10 @@ function AuthPage({onLogged, userDat}) {
     const [showBtnActive, setShowBtnActive] = useState('disable');
     const [lockIconActive, setLockIconActive] = useState('lock-icon-active');
     const [userIconActive, setUserIconActive] = useState('user-icon-active');
+    const userErrorRef = useRef(undefined);
+    const loadingBarRef = useRef(undefined);
+    const errorUserBg = useRef(undefined);
+    const [errorMessage, setErrorMessage] = useState('Usuario ou Senha Incorretos !');
     let children = undefined;
     const [isLogged, setIsLogged] = useState(false);
     let formType = 'sign-in';
@@ -83,24 +89,6 @@ function AuthPage({onLogged, userDat}) {
         }
     };
 
-    const handleChangeForm = () => {
-        if (formType === 'sign-in'){
-            children[0].style.opacity = 1;
-            children[0].style.transform = 'translateX(100%)';
-            children[1].style.transform = 'translateX(-100%)';
-            children[1].style.opacity = 0;
-            formType = 'sign-up';
-         }else{
-            children[0].style.opacity = 0;
-            children[0].style.transform = 'translateX(0%)';
-            children[1].style.transform = 'translateX(0%)';
-            children[1].style.opacity = 1;  
-            formType = 'sign-in';  
-         }
-         loginPasswordRef.current.type = 'password';
-         signPasswordRef.current.type = 'password';
-    };
-
     const handleInput = (e) => {
         if (e.target.value){
             setShowBtnActive('active');
@@ -139,6 +127,35 @@ function AuthPage({onLogged, userDat}) {
         }
     }
 
+    const resetInputValues = () => {
+        loginPasswordRef.current.type = 'password';
+        signPasswordRef.current.type = 'password';
+        loginPasswordRef.current.value = '';
+        signPasswordRef.current.value = '';
+        loginEmailRef.current.value = '';
+        signEmailRef.current.value = '';
+        setShowBtnActive('disable');
+        setLockIconActive('lock-icon-active');
+        setUserIconActive('user-icon-active')
+    }
+
+    const handleChangeForm = () => {
+        if (formType === 'sign-in'){
+            children[0].style.opacity = 1;
+            children[0].style.transform = 'translateX(100%)';
+            children[1].style.transform = 'translateX(-100%)';
+            children[1].style.opacity = 0;
+            formType = 'sign-up';
+         }else{
+            children[0].style.opacity = 0;
+            children[0].style.transform = 'translateX(0%)';
+            children[1].style.transform = 'translateX(0%)';
+            children[1].style.opacity = 1;  
+            formType = 'sign-in';  
+         }
+         resetInputValues();
+    };
+
     const handleShowInput = () => {
         if (loginPasswordRef.current || signPasswordRef.current){
             if (signPasswordRef.current.type === 'password' || loginPasswordRef.current.type === 'password'){
@@ -151,13 +168,33 @@ function AuthPage({onLogged, userDat}) {
         }
     };
 
+    const handleErrorActive = () => {
+        userErrorRef.current.style.opacity = '1';
+        userErrorRef.current.style.transform = 'translateY(0%)';
+        loadingBarRef.current.style.animation = 'none';
+        errorUserBg.current.style.opacity = '1';
+        errorUserBg.current.style.zIndex = '190';
+        setTimeout(() => {
+            loadingBarRef.current.style.animation = 'loading 2s linear';
+            setTimeout(() => {
+                userErrorRef.current.style.opacity = '0';
+                userErrorRef.current.style.transform = 'translateY(-100%)';
+                errorUserBg.current.style.opacity = '0';
+                errorUserBg.current.style.zIndex = '-50';
+                setTimeout(() => {
+                    navigate('/auth-page');
+                }, 300);
+            }, 2000);
+        }, 300);
+    };
+
     const redirect = (value) => {
         if (value){
             onLogged(true);
             navigate('/home');
         }else{
+            handleErrorActive();
             onLogged(false);
-            navigate('/auth-page');
         }
     };
 
@@ -168,7 +205,7 @@ function AuthPage({onLogged, userDat}) {
         })
         .catch((error) => {
             console.error(error);
-            alert(error.message);
+            setErrorMessage(error.message);
             const errorCode = error.code;
             const errorMessage = error.message;
             redirect(false);
@@ -189,8 +226,8 @@ function AuthPage({onLogged, userDat}) {
             redirect(true);
         })
         .catch((error) => {
+            setErrorMessage(error.message);
             redirect(false);
-            alert(error.message);
             const errorCode = error.code;
             const errorMessage = error.message;
         });
@@ -285,6 +322,7 @@ function AuthPage({onLogged, userDat}) {
                                     id="sign-up-email"
                                     type="text"
                                     placeholder="Digite seu email"
+                                    ref={signEmailRef}
                                     onChange={handleEmailInput}
                                     required/>
                             </div>
@@ -334,6 +372,7 @@ function AuthPage({onLogged, userDat}) {
                                     className="email"
                                     id="sign-in-email"
                                     type="text"
+                                    ref={loginEmailRef}
                                     placeholder="Digite seu email"
                                     onChange={handleEmailInput}
                                     required/>
@@ -378,6 +417,13 @@ function AuthPage({onLogged, userDat}) {
                     <p>Esta é a nossa área de login e cadastro. Se já possui uma conta, basta entrar, caso contrário, siga para a área de cadastro.</p>
                 </div>
             </section>
+
+            <div className='user-error' ref={userErrorRef}>
+                <h2>{errorMessage}</h2>
+                <div className="loading-bar" ref={loadingBarRef}></div>
+            </div>
+            <div className="user-error-bg" ref={errorUserBg}></div>
+        
         </main>
     )
 }
