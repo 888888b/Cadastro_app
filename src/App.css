@@ -610,6 +610,10 @@ header h1{
     background-color: var(--black);
   }
 
+  .menu-container .background-hide-menu{
+    background-color: var(--black);
+  }
+
   header{
     justify-content: center;
     height: 90px;
