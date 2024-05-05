@@ -258,7 +258,7 @@ header h1{
 
 .auth-page form h2{
   color: var(--white);
-  font: 600 35px 'Poppins', 'Roboto', sans-serif;
+  font: 600 37px 'Poppins', 'Roboto', sans-serif;
 }
 
 .auth-page .email-input-box, .password-input-box, .check-box{
@@ -269,7 +269,7 @@ header h1{
 
 .auth-page form label{
   color: var(--white-opacity-09);
-  font: 500 16px 'Poppins', 'Roboto',sans-serif;
+  font: 500 17px 'Poppins', 'Roboto',sans-serif;
 }
 
 .auth-page form .input-box{
@@ -338,11 +338,11 @@ header h1{
   border: none;
   border-bottom: .99pt solid var(--white-opacity-06);
   outline: none;
-  font: 400 15px 'Poppins', 'Roboto',sans-serif;
+  font: 400 16px 'Poppins', 'Roboto',sans-serif;
 }
 
 .auth-page form input::placeholder{
-  font-size: 13.7px;
+  font-size: 14.7px;
   padding-left: 25px;
   color: var(--white-opacity-05);
 }
@@ -358,12 +358,12 @@ header h1{
 }
 
 .auth-page form .check-box input{
-  width: 14px;
+  width: 15px;
   margin-top: 5px;
 }
 
 .auth-page form .check-box label{
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   color: var(--white-opacity-09);
 }
