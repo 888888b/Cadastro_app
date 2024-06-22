@@ -1,13 +1,10 @@
-import './App.css';
-import { useState, useEffect } from 'react';
+import './Global.css';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import React from 'react';
-import Header from './components/header.jsx';
-import Home from './components/home.jsx';
-import Cadastros from './components/cadastros.jsx';
-import Profile from './components/profile.jsx';
-import AuthPage from './components/authPage.jsx';
-import Menu from './components/mobileMenu.jsx'
+import Header from '../Home/HomeComponents/Header.jsx';
+import Home from '../Home/HomePage.jsx';
+import Profile from '../Profile/ProfilePage.jsx';
+import AuthPage from '../Auth/AuthPage.jsx';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

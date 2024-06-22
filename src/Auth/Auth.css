@@ -1,0 +1,374 @@
+@import url(../App/Global.css);
+
+.auth-page{
+    width: 100vw;
+    height: 100vh;
+    max-height: 800px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: var(--medium-blue);
+}
+
+.element-opacity-02::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 200;
+    background-color: transparent;
+    animation: colorTransition .2s ease-in-out forwards;
+}
+
+.auth-form, .page-text-area{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    transition: all .2s ease-in-out;
+    overflow-y: hidden;
+}
+
+.user-error{
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    transition: all .3s ease-out;
+    z-index: 200;
+    opacity: 0;
+    padding: 25px 30px;
+    border: 1pt solid var(--red);
+    border-top: none;
+    transform: translateY(-100%);
+}
+
+.user-error::after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--darkred);
+}
+
+.user-error h2{
+    color: var(--white-opacity-09);
+    font: 500 16px 'Roboto', serif;
+}
+
+.loading-bar{
+    background-color: var(--red);
+    width: 0%;
+    height: 5px;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+}
+
+.user-error-bg{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: -50;
+    width: 100%;
+    height: 100%;
+    transition: all .3s ease-in-out;
+    background-color: var(--black-opacity-08);
+}
+
+.sign-up-form{
+    opacity: 0;
+}
+
+.container-form{
+    min-width: 70%;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+form h2{
+    color: var(--white);
+    font: 600 37px 'Poppins', 'Roboto', sans-serif;
+}
+
+.email-input-box, .password-input-box, .check-box{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+form label{
+    color: var(--white-opacity-09);
+    font: 500 17px 'Poppins', 'Roboto',sans-serif;
+}
+
+.input-box{
+    width: 100%;
+    position: relative;
+}
+
+
+form .eye-icon, form .lock-icon, form .user-icon{
+    color: var(--white-opacity-07);
+    background-color: var(--transparent);
+    position: absolute;
+    font-size: 15px;
+    height: 100%;
+    top: 50%;
+    right: 20px;
+    cursor: pointer;
+    transform:  translateY(-50%);
+    opacity: 0;
+    z-index: 10;
+    transition: all .1s ease-in-out;
+}
+
+form .lock-icon{
+    left: 5px;
+    opacity: 1;
+    font-size: 16px;
+    cursor: auto;
+    z-index: 1;
+    transition: all 0s ease-in-out;
+    color: var(--white-opacity-05);
+    }
+
+form .user-icon{
+    color: var(--white-opacity-05);
+    left: 5px;
+    opacity: 1;
+    cursor: auto;
+    z-index: 1;
+    font-size: 13px;
+}
+
+form .eye-icon{
+    color: var(--white-opacity-07);
+    font-size: 16.5px;
+}
+
+form .eye-visible{
+    opacity: 1;
+}
+
+form .lock-invisible{
+    opacity: 0;
+}
+
+form .user-invisible{
+    opacity: 0;
+}
+
+form input{
+    color: var(--white);
+    width: 100%;
+    background-color: var(--transparent);
+    padding: 5px;
+    border: none;
+    border-bottom: .99pt solid var(--white-opacity-06);
+    outline: none;
+    font: 400 16px 'Poppins', 'Roboto',sans-serif;
+}
+
+form input::placeholder{
+    font-size: 14.7px;
+    padding-left: 25px;
+    color: var(--white-opacity-05);
+}
+
+form input:focus{
+    background-color: var(--medium-blue);
+}
+
+form .check-box{
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+form .check-box input{
+    width: 15px;
+    margin-top: 5px;
+}
+
+form .check-box label{
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--white-opacity-09);
+}
+
+form .check-box label span{
+    color: var(--light-blue);
+    cursor: pointer;
+    position: relative;
+}
+
+form .check-box label span::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-bottom: 1pt solid var(--light-blue);
+}
+
+form button{
+    height: 38px;
+    position: static;
+    margin-top: 10px;
+    border-radius: 4px;
+    padding: 0;
+    border: none;
+    font: 500 16px 'Roboto', 'Poppins', sans-serif;
+    outline: none;
+    cursor: pointer;
+}
+
+form .btn-submit{
+    background-color: var(--white);
+    height: 39px;
+    overflow: hidden;
+}
+
+.form-division{
+    position: relative;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+}
+
+.form-division #line{
+    width: 100%;
+    border-bottom: 1pt solid var(--white-opacity-05);
+}
+
+.form-division h3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white-opacity-09);
+    background-color: var(--medium-blue);
+    width: 50px;
+    height: 30px;
+    font: 400 12px 'Poppins', 'Roboto', sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Other-authentications-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: visible;
+    margin: 20px 0px;
+}
+
+.Other-authentications-form button{
+    width: 48%;
+    height: 39px;
+    margin-top: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+}
+
+.google-icon, .facebook-icon{
+    font-size: 23px;
+}
+
+.Other-authentications-form button:nth-child(2){
+    background-color: var(--black);
+    border: 1pt solid var(--white);
+}
+
+.facebook-icon{
+    color: var(--white);
+}
+
+.account-exist{
+    margin-top: 10px;
+}
+
+.account-exist p{
+    color: var(--white-opacity-06);
+    text-align: center;
+    font: 400 14px 'Poppins', 'Montserrat', sans-serif;
+}
+
+.account-exist p span{
+    color: var(--white);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.page-text-area{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    border-top-right-radius: 200px;
+    background-color: var(--white);
+    overflow-y: hidden;
+}
+
+.text-center{
+    width: 50%;
+    min-width: 500px;
+}
+
+.text-center h1{
+    color: var(--medium-blue);
+    font: 800 60px 'Poppins', serif;
+    position: relative;
+}
+
+.text-center h1::before{
+    content: '';
+    width: 50%;
+    position: absolute;
+    height: 100%;
+    bottom: 0;
+    border: none;
+    border-bottom: 5pt solid var(--medium-blue);
+}
+
+.text-center p{
+    color: var(--medium-blue);
+    font: 500 17px 'Poppins', 'Montserrat', helvetica, sans-serif;
+    margin-top: 20px;
+}
+
+.toast-container{
+    pointer-events: none;
+}
