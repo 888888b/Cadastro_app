@@ -1,41 +1,32 @@
 import './Global.css';
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Header from '../Home/HomeComponents/Header.jsx';
 import Home from '../Home/HomePage.jsx';
 import Profile from '../Profile/ProfilePage.jsx';
 import AuthPage from '../Auth/AuthPage.jsx';
+import React, { useContext } from 'react';
+import { FirebaseContext } from '../context/firebaseContext.jsx';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userDat, setUserDat] = useState(undefined);
-  const handleChangeValue = (e) => {
-    setIsLoggedIn(e);
-  }
-
-  const handleUserDat = (e) => {
-    setUserDat(e);
-  }
+  const userStatus = useContext(FirebaseContext);
 
   return (
       <Router>
           <Routes>
-            <Route path='/' element={<AuthPage onLogged={handleChangeValue} userDat={handleUserDat}/>} />
-            <Route path='*' element={isLoggedIn ? <AuthenticatedRoutes userDatValue={userDat}/> : <Navigate to='/'/>} />
+            <Route path='/' element={<AuthPage/>} />
+            <Route path='*' element={userStatus.isLoggedIn ? <AuthenticatedRoutes/> : <Navigate to='/'/>} />
           </Routes>
       </Router>
   );
 }
 
-function AuthenticatedRoutes({userDatValue}) {
+function AuthenticatedRoutes() {
   return(
     <>
-      <Header userDat={userDatValue}/>
-      <Menu/>
+      <Header/>
       <Routes>
           <Route path='/home' element={<Home/>}/>
-          <Route path='/usuarios' element={<Cadastros />} />
-          <Route path='/profile' element={<Profile userDat={userDatValue}/>} />
+          <Route path='/profile' element={<Profile/>} />
           <Route path='/auth-page' element={<Navigate to="/" />} />
       </Routes>
     </>

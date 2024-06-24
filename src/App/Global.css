@@ -11,13 +11,17 @@
     --black: black;
     --black-opacity-09: rgb(0, 0, 0, 0.9);
     --black-opacity-08: rgb(0, 0, 0, 0.8);
+    --black-opacity-05: rgb(0, 0, 0, 0.5);
+    --black-opacity-02: rgb(0, 0, 0, 0.2);
     --black-opacity-01: rgb(0, 0, 0, 0.1);
     --black-opacity-00: rgb(0, 0, 0, 0.0);
     --white: white;
     --white-opacity-09: rgb(255, 255, 255, 0.9);
+    --white-opacity-08: rgb(255, 255, 255, 0.9);
     --white-opacity-07: rgb(255, 255, 255, 0.7);
     --white-opacity-06: rgb(255, 255, 255, 0.6);
     --white-opacity-05: rgb(255, 255, 255, 0.55);
+    --white-opacity-03: rgb(255, 255, 255, 0.3);
     --white-opacity-01: rgb(255, 255, 255, 0.1);
     --gray: gray;
     --blue: blue;

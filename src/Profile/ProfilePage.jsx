@@ -1,56 +1,46 @@
+import './Profile.css';
 import { FaUserCircle } from "react-icons/fa";
+import { useContext } from 'react';
+import { FirebaseContext } from '../context/firebaseContext';
 
-function Profile({userDat}) {
+function Profile() {
+    const userdata = useContext(FirebaseContext);
+
     return(
-        <main className='profile-page'>
-            <section className="user-section">
-                <h1>Perfil</h1>
-                <div className="profile-user-image">
-                    {userDat.photoURL ? (
-                        <img src={userDat.photoURL} alt="" srcset=""/>
-                    ): (
-                        <FaUserCircle className="user-icon"/>
-                    )}
+        <section className="profile-page">
+            <section className="user-info">
+                <FaUserCircle className="user-icon"/>
+                <div className="user-data">
+
+                    <div className="data-items">
+                        <span>Endereço de e-mail</span>
+                        <span>
+                            {userdata.currentUserData.email ? userdata.currentUserData.email : 'Indisponivel'}
+                        </span>
+                    </div>
+
+                    <div className="data-items">
+                        <span>Criação</span>
+                        <span>
+                            {userdata.currentUserData.created ? userdata.currentUserData.created : 'Indisponivel'}
+                        </span>
+                    </div>
+
+                    <div className="data-items">
+                        <span>Senha</span>
+                        <span>
+                            {userdata.currentUserData.password ? userdata.currentUserData.password : 'Indisponivel'}
+                        </span>
+                    </div>
+
                 </div>
-
-                <section className="profile-user-details">
-
-                    <div className="user-info-box">
-                        <label htmlFor="">Nome de Usuario</label>
-                        <div className="name-box user-information">
-                            {userDat.displayName ? (
-                                <h2>{userDat.displayName}</h2>
-                            ):(
-                                <h2>user test</h2>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="user-info-box">
-                        <label htmlFor="">Email</label>
-                        <div className="email-box user-information">
-                            {userDat.email ? (
-                                <h2>{userDat.email}</h2>
-                            ): (
-                                <h2>Usertest123@gmail.com</h2>
-                            )}
-                        </div>
-                    </div>
-                    
-                    <div className="user-info-box">
-                        <label htmlFor="">Data de Criação</label>
-                        <div className="date-box user-information">
-                            {userDat.metadata.creationTime ? (
-                                <h2>{userDat.metadata.creationTime}</h2>
-                            ): (
-                                <h2>xx/xx/xxxx</h2>
-                            )}
-                        </div>
-                    </div>
-                </section>
             </section>
-        </main>
-    )
-}
+
+            <section className="more-details">
+
+            </section>
+        </section>
+    );
+};
 
 export default Profile;

@@ -12,6 +12,8 @@
     justify-content: center;
     align-items: center;
     z-index: 1;
+    padding: 0px 30px;
+    box-sizing: border-box;
     background-color: var(--medium-blue);
 }
 
@@ -202,13 +204,12 @@ form input:focus{
 
 form .check-box{
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
 }
 
 form .check-box input{
     width: 15px;
-    margin-top: 5px;
 }
 
 form .check-box label{
@@ -371,4 +372,40 @@ form .btn-submit{
 
 .toast-container{
     pointer-events: none;
+}
+
+@media screen and (max-width: 1200px){
+    .auth-page{
+        padding: 0;
+    }
+
+    .page-text-area{
+        display: none;
+    }
+
+    .auth-form{
+        width: 100%;
+    }
+
+    .sign-up-form{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: -100%;
+
+    }
+
+    .auth-form .container-form{
+        width: min(500px, 100%);
+        margin: auto;
+        min-width: 0%;
+        padding: 0px 30px;
+    }
+
+}
+
+@media screen and (max-width: 500px) {
+    .auth-form .container-form{
+        padding: 0px 15px;
+    }
 }

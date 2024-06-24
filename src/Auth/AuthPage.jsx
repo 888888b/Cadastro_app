@@ -1,35 +1,24 @@
 import './Auth.css';
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegUser, FaGithub, FaRegEyeSlash } from "react-icons/fa";
 import { RiLock2Line } from "react-icons/ri";
 import { FcGoogle } from "react-icons/fc";
-import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, push, set, onValue, orderByChild, query, equalTo } from 'firebase/database';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FirebaseContext } from '../context/firebaseContext';
 
-function AuthPage(props) {
+function AuthPage() {
     const [isEyeIconActive, setIsEyeIconActive] = useState('eye-invisible');
     const [isLockIconActive, setIsLockIconActive] = useState('lock-visible');
     const [isUserIconActive, setIsUserIconActive] = useState('user-visible');
     const [activeForm, setActiveForm] = useState('sign-in');
-    const [isLogged, setIsLogged] = useState(false);
     const formsRef = useRef([]);
     const inputsRef = useRef([]);
     const pageContainerRef = useRef(undefined);
-    const navigate = useNavigate(undefined);
-    const firebaseConfig = {
-        apiKey: "AIzaSyBtuIzYiWYVg7j55olwUasnBSxS0ZOYEyo",
-        authDomain: "login-project033.firebaseapp.com",
-        projectId: "login-project033",
-        databaseURL: "https://login-project033-default-rtdb.firebaseio.com",
-        storageBucket: "login-project033.appspot.com",
-        messagingSenderId: "184638576364",
-        appId: "1:184638576364:web:f4773520ee157785f4b7c9",
-        measurementId: "G-GLZLSQQMEK"
-    };
-    const app = initializeApp(firebaseConfig);
+    const navigate = useNavigate(undefined);    
+    const app = useContext(FirebaseContext);
 
     const handleChangeForm = () => {
         if (activeForm === 'sign-in'){
@@ -132,17 +121,19 @@ function AuthPage(props) {
     }
 
     const addUserToDb = async (userEmail, userPassword) => {
-        const db = getDatabase(app);
+        const db = getDatabase(app.firebaseApp);
         const userRef = ref(db, 'users');
         const userID = push(userRef).key;
+        const creationDate = new Date().toLocaleString().replace(',', '');
 
         try{
             const response = await findAccountByemail(userEmail);
             if (response){
                 notify('Email já cadastrado!')
             }else{
-                set(ref(db, `users/${userID}`) , {email: userEmail, password: userPassword}).then(() => {
-                    props.onLogged(true);
+                set(ref(db, `users/${userID}`) , {email: userEmail, password: userPassword, created: creationDate}).then(() => {
+                    app.setIsLoggedIn(true);
+                    app.setCurrentUserData({email: userEmail, password: userPassword, created: creationDate });
                     navigate('/home');
                 });
             }
@@ -154,11 +145,11 @@ function AuthPage(props) {
     const authenticateUser = async (userEmail, userPassword) => {
         try{
             const response = await findAccountByemail(userEmail);
-            console.log('');
             if (response){
                 const user = Object.values(response)[0];
                 if (user.email === userEmail && user.password === userPassword) {
-                    props.onLogged(true);
+                    app.setIsLoggedIn(true);
+                    app.setCurrentUserData(user);
                     navigate('/home');
                 }else{
                     notify('E-mail ou senha incorretos');
@@ -173,7 +164,7 @@ function AuthPage(props) {
 
     const findAccountByemail = async (userEmail) => {
         let response = false;
-        const db = getDatabase(app);
+        const db = getDatabase(app.firebaseApp);
         const userRef = ref(db, 'users');
         const queryDB = query(userRef, orderByChild('email'), equalTo(userEmail));
         await new Promise((resolve, reject) => {
