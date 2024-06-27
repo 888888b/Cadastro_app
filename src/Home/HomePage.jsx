@@ -39,13 +39,15 @@ function Home(){
             <h1>Tabela de usuarios</h1>
             <div className='users-table'>
 
-                <span className='element-left'>E-mail</span>
+                <span className='element-left'>Nome</span>
+                <span className='element-center'>E-mail</span>
                 <span className='element-center'>Senha</span>
                 <span className='element-right'>Criação</span>
         
                 {usersList.map(user => (
                     <>
-                        <p className='element-left'>{user.email}</p>
+                        <p className='element-left'>{user.name}</p>
+                        <p className='element-center'>{user.email}</p>
                         <p className='element-center'>{user.password.replace(/./g, '*')}</p>
                         <p className='element-right'>{user.created}</p>
                     </>
@@ -56,6 +58,8 @@ function Home(){
  
                 {usersList.map(user => (
                     <div className='users-data'>
+                        <span className='element-left'>Nome</span>
+                        <p className='element-right'>{user.name}</p>
                         <span className='element-left'>E-mail</span>
                         <p className='element-right'>{user.email}</p>
                         <span className='element-left'>Senha</span>

@@ -33,6 +33,13 @@ function Profile() {
                         </span>
                     </div>
 
+                    <div className="data-items">
+                        <span>Nome de usuario</span>
+                        <span>
+                            {userdata.currentUserData.name ? userdata.currentUserData.name : 'Indisponivel'}
+                        </span>
+                    </div>
+
                 </div>
             </section>
 

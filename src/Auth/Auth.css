@@ -98,7 +98,11 @@
 }
 
 .container-form{
-    min-width: 70%;
+    min-width: 75%;
+    border: 1pt solid rgb(255, 255, 255, 0.5);
+    padding: 20px 50px;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 form{
@@ -113,7 +117,7 @@ form h2{
     font: 600 37px 'Poppins', 'Roboto', sans-serif;
 }
 
-.email-input-box, .password-input-box, .check-box{
+.email-input-box, .password-input-box, .name-input-box, .check-box{
     display: flex;
     flex-direction: column;
     row-gap: 8px;
@@ -130,7 +134,7 @@ form label{
 }
 
 
-form .eye-icon, form .lock-icon, form .user-icon{
+form .eye-icon, form .lock-icon, form .user-icon, form .email-icon{
     color: var(--white-opacity-07);
     background-color: var(--transparent);
     position: absolute;
@@ -145,23 +149,22 @@ form .eye-icon, form .lock-icon, form .user-icon{
     transition: all .1s ease-in-out;
 }
 
-form .lock-icon{
-    left: 5px;
-    opacity: 1;
-    font-size: 16px;
-    cursor: auto;
-    z-index: 1;
-    transition: all 0s ease-in-out;
-    color: var(--white-opacity-05);
-    }
-
-form .user-icon{
+form .user-icon, form .lock-icon, form .email-icon{
     color: var(--white-opacity-05);
     left: 5px;
     opacity: 1;
     cursor: auto;
     z-index: 1;
     font-size: 13px;
+}
+
+form .lock-icon{
+    font-size: 16px;
+    transition: all 0s ease-in-out;
+}
+
+form .email-icon{
+    font-size: 15px;
 }
 
 form .eye-icon{
@@ -178,6 +181,10 @@ form .lock-invisible{
 }
 
 form .user-invisible{
+    opacity: 0;
+}
+
+form .email-invisible{
     opacity: 0;
 }
 
@@ -235,7 +242,7 @@ form .check-box label span::before{
 }
 
 form button{
-    height: 38px;
+    height: 39px;
     position: static;
     margin-top: 10px;
     border-radius: 4px;
@@ -317,6 +324,10 @@ form .btn-submit{
     color: var(--white);
 }
 
+.sign-up-form .account-exist{
+    margin-top: 15px;
+}
+
 .account-exist{
     margin-top: 10px;
 }
@@ -338,7 +349,8 @@ form .btn-submit{
     top: 0;
     left: 0;
     z-index: 20;
-    border-top-right-radius: 200px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
     background-color: var(--white);
     overflow-y: hidden;
 }
@@ -399,13 +411,14 @@ form .btn-submit{
         width: min(500px, 100%);
         margin: auto;
         min-width: 0%;
-        padding: 0px 30px;
+        padding: 20px 30px;
     }
 
 }
 
 @media screen and (max-width: 500px) {
     .auth-form .container-form{
-        padding: 0px 15px;
+        padding: 20px 20px;
+        width: calc(100% - 30px);
     }
 }

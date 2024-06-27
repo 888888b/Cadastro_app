@@ -54,7 +54,7 @@ header li{
 .home-container .users-table{
     background-color: var(--white);
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
     grid-template-rows: repeat(auto, 50px);
     border-radius: 3px;
 }
@@ -163,7 +163,7 @@ header li{
         background-color: var(--black-opacity-01);
     }
 
-    .users-data span:nth-of-type(3), .users-data p:nth-of-type(3){
+    .users-data span:nth-of-type(4), .users-data p:nth-of-type(4){
         border-bottom: none;
     }
     

@@ -3,6 +3,7 @@ import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegUser, FaGithub, FaRegEyeSlash } from "react-icons/fa";
 import { RiLock2Line } from "react-icons/ri";
+import { MdEmail } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { getDatabase, ref, push, set, onValue, orderByChild, query, equalTo } from 'firebase/database';
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FirebaseContext } from '../context/firebaseContext';
 
 function AuthPage() {
+    const [isEmailIconActive, setIsEmailIconActive] = useState('email-visible');
     const [isEyeIconActive, setIsEyeIconActive] = useState('eye-invisible');
     const [isLockIconActive, setIsLockIconActive] = useState('lock-visible');
     const [isUserIconActive, setIsUserIconActive] = useState('user-visible');
@@ -42,18 +44,18 @@ function AuthPage() {
     const ShowPasswordInputValue = () => {
         if (activeForm === 'sign-in'){
             if (inputsRef.current){
-                if (inputsRef.current[3].type === 'text'){
-                    inputsRef.current[3].type = 'password';
+                if (inputsRef.current[4].type === 'text'){
+                    inputsRef.current[4].type = 'password';
                 }else{
-                    inputsRef.current[3].type = 'text';
+                    inputsRef.current[4].type = 'text';
                 }
             }
         }else{
             if (inputsRef.current){
-                if (inputsRef.current[1].type === 'text'){
-                    inputsRef.current[1].type = 'password';
+                if (inputsRef.current[2].type === 'text'){
+                    inputsRef.current[2].type = 'password';
                 }else{
-                    inputsRef.current[1].type = 'text';
+                    inputsRef.current[2].type = 'text';
                 }
             }
         }
@@ -73,21 +75,30 @@ function AuthPage() {
                 setIsLockIconActive('lock-invisible')
                 setIsEyeIconActive('eye-visible');
             }else{
-                setIsUserIconActive('user-invisible');
+                if (type === 'name'){
+                    setIsUserIconActive('user-invisible');
+                }else{
+                    setIsEmailIconActive('email-invisible');
+                }
             }
         }else{
             if (type === 'password'){
                 setIsEyeIconActive('eye-invisible');
                 setIsLockIconActive('lock-visible')
             }else{
-                if (type === 'email'){
+                if (type === 'name'){
                     setIsUserIconActive('user-visible');
+                }
+
+                if (type === 'email'){
+                    setIsEmailIconActive('email-visible');
                 }
 
                 if (type === 'all'){
                     setIsUserIconActive('user-visible');
                     setIsEyeIconActive('eye-invisible');
                     setIsLockIconActive('lock-visible')
+                    setIsEmailIconActive('email-visible');
                 }
             }
         }
@@ -109,18 +120,18 @@ function AuthPage() {
 
     const handleSubmitForm = (formRef, formType, inputsValue) => {
         formRef.preventDefault();
-        if (inputsValue[0] && inputsValue[1] && inputsValue[2] && inputsValue[3]){
+        if (inputsValue[0] && inputsValue[1] && inputsValue[2] && inputsValue[3] && inputsValue[4]){
             if (formType === 'sign-in'){
-                authenticateUser(inputsValue[2].value.toLowerCase(), inputsValue[3].value.toLowerCase());
+                authenticateUser(inputsValue[3].value.toLowerCase(), inputsValue[4].value.toLowerCase());
             }else{
                 if(formType === 'sign-up'){
-                    addUserToDb(inputsValue[0].value.toLowerCase(), inputsValue[1].value.toLowerCase());
+                    addUserToDb(inputsValue[1].value.toLowerCase(), inputsValue[2].value.toLowerCase(), inputsValue[0].value);
                 }
             }
         }
     }
 
-    const addUserToDb = async (userEmail, userPassword) => {
+    const addUserToDb = async (userEmail, userPassword, userName) => {
         const db = getDatabase(app.firebaseApp);
         const userRef = ref(db, 'users');
         const userID = push(userRef).key;
@@ -131,10 +142,19 @@ function AuthPage() {
             if (response){
                 notify('Email já cadastrado!')
             }else{
-                set(ref(db, `users/${userID}`) , {email: userEmail, password: userPassword, created: creationDate}).then(() => {
-                    app.setIsLoggedIn(true);
-                    app.setCurrentUserData({email: userEmail, password: userPassword, created: creationDate });
-                    navigate('/home');
+                set(ref(db, `users/${userID}`) , {
+                    name: userName,
+                    email: userEmail,
+                    password: userPassword,
+                    created: creationDate
+                        }).then(() => {
+                        app.setIsLoggedIn(true);
+                        app.setCurrentUserData({
+                            name: userName,
+                            email: userEmail,
+                            password: userPassword,
+                            created: creationDate });
+                        navigate('/home');
                 });
             }
         }catch (error){
@@ -189,16 +209,31 @@ function AuthPage() {
                     <form onSubmit={(e) => {handleSubmitForm(e, 'sign-up', inputsRef.current)}} id="sign-up">
                         <h2>Cadastro</h2>
 
+                        <div className="name-input-box">
+                            <label htmlFor="user-name">Nome</label>
+                            <div className="input-box">
+                                <FaRegUser className={`user-icon ${isUserIconActive}`}/>
+                                <input
+                                    type="text"
+                                    id='user-name'
+                                    onChange={(e) => inputObserver(e.target.value, 'name')}
+                                    ref={(e) => inputsRef.current[0] = e}
+                                    placeholder="Nome de usuario"
+                                    required
+                                />
+                            </div>
+                        </div>
+
                         <div className="email-input-box">
                             <label htmlFor="sign-up-email">Email</label>
                             <div className="input-box">
-                                <FaRegUser className={`user-icon ${isUserIconActive}`}/>
+                                <MdEmail className={`email-icon ${isEmailIconActive}`}/>
                                 <input
                                     className="email"
                                     id="sign-up-email"
                                     type="text"
                                     onChange={(e) => inputObserver(e.target.value, 'email')}
-                                    ref={(e) => inputsRef.current[0] = e}
+                                    ref={(e) => inputsRef.current[1] = e}
                                     placeholder="Digite seu email"
                                     required/>
                             </div>
@@ -220,7 +255,7 @@ function AuthPage() {
                                   id="sign-up-password" 
                                   placeholder="Crie uma senha"
                                   onChange={(e) => inputObserver(e.target.value, 'password')} 
-                                  ref={(e) => inputsRef.current[1] = e}
+                                  ref={(e) => inputsRef.current[2] = e}
                                   required 
                                 />
                             </div>
@@ -234,18 +269,6 @@ function AuthPage() {
                         <button className="btn-submit">Enviar</button>
                     </form>
 
-                    <div className="form-division">
-                        <div id="line"></div>
-                        <h3>Ou</h3>
-                    </div>
-                    <div className="Other-authentications-form">
-                        <button>
-                            <FcGoogle className='google-icon'/>
-                        </button>
-                        <button>
-                            <FaGithub className="facebook-icon"/>
-                        </button>
-                    </div>
                     <div className="account-exist">
                         <p>Ja tem uma conta ? <span onClick={handleChangeForm}>Entrar</span></p>
                     </div>
@@ -260,13 +283,13 @@ function AuthPage() {
                         <div className="email-input-box">
                             <label htmlFor="sign-in-email">Email</label>
                             <div className="input-box">
-                                <FaRegUser className={`user-icon ${isUserIconActive}`}/>
+                                <MdEmail className={`email-icon ${isEmailIconActive}`}/>
                                 <input
                                     className="email"
                                     id="sign-in-email"
                                     type="text"
                                     onChange={(e) => inputObserver(e.target.value, 'email')}
-                                    ref={(e) => inputsRef.current[2] = e}
+                                    ref={(e) => inputsRef.current[3] = e}
                                     placeholder="Digite seu email"
                                     required/>
                             </div>
@@ -288,7 +311,7 @@ function AuthPage() {
                                     id="sign-in-password" 
                                     placeholder="Digite sua senha"
                                     onChange={(e) => inputObserver(e.target.value, 'password')} 
-                                    ref={(e) => inputsRef.current[3] = e}
+                                    ref={(e) => inputsRef.current[4] = e}
                                     required
                                 />
                             </div>
