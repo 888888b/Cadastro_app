@@ -48,7 +48,7 @@ function Home(){
                     <>
                         <p className='element-left'>{user.name}</p>
                         <p className='element-center'>{user.email}</p>
-                        <p className='element-center'>{user.password.replace(/./g, '*')}</p>
+                        <p className='element-center'>{user.password ? user.password.replace(/./g, '*') : '*******'}</p>
                         <p className='element-right'>{user.created}</p>
                     </>
                 ))}
@@ -63,7 +63,7 @@ function Home(){
                         <span className='element-left'>E-mail</span>
                         <p className='element-right'>{user.email}</p>
                         <span className='element-left'>Senha</span>
-                        <p className='element-right'>{user.password.replace(/./g, '*')}</p>
+                        <p className='element-right'>{user.password ? user.password.replace(/./g, '*') : '*******'}</p>
                         <span className='element-left'>Criação</span>
                         <p className='element-right'>{user.created}</p>
                     </div>

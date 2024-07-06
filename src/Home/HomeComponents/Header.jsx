@@ -1,6 +1,6 @@
 import '../Home.css';
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { FirebaseContext } from '../../context/firebaseContext';
 
 function Header() {
@@ -10,10 +10,6 @@ function Header() {
         navigate(`/${e.target.id}`);
     } 
 
-    useEffect(() => {
-        console.log(firebaseApp);
-    },[]);
-
     return(
         <header>
             <h1>{firebaseApp.currentUserData.name ? firebaseApp.currentUserData.name : null}</h1>
@@ -21,7 +17,7 @@ function Header() {
                 <ul>
                     <li id='home' onClick={handleNavigate}>Inicio</li>
                     <li id="auth-page" onClick={handleNavigate}>Login</li>
-                    <li>|</li>
+                    <li id='disabled'>|</li>
                     <li id='profile' onClick={handleNavigate}>Conta</li>
                 </ul>
             </nav>
