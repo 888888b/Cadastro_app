@@ -11,10 +11,12 @@
     --black: black;
     --black-opacity-09: rgb(0, 0, 0, 0.9);
     --black-opacity-08: rgb(0, 0, 0, 0.8);
+    --black-opacity-07: rgb(0, 0, 0, 0.7);
     --black-opacity-05: rgb(0, 0, 0, 0.5);
     --black-opacity-02: rgb(0, 0, 0, 0.2);
     --black-opacity-01: rgb(0, 0, 0, 0.1);
     --black-opacity-00: rgb(0, 0, 0, 0.0);
+
     --white: white;
     --white-opacity-09: rgb(255, 255, 255, 0.9);
     --white-opacity-08: rgb(255, 255, 255, 0.9);
@@ -23,10 +25,11 @@
     --white-opacity-05: rgb(255, 255, 255, 0.55);
     --white-opacity-03: rgb(255, 255, 255, 0.3);
     --white-opacity-01: rgb(255, 255, 255, 0.1);
+
     --gray: gray;
-    --blue: blue;
     --light-blue: dodgerblue;
     --medium-blue: #0F0F1A;
+    --light-gray: #1e1f29;
     --transparent: transparent;
     --darkred: rgb(87, 1, 1);
     --red: red;

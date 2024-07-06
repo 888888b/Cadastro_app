@@ -29,13 +29,14 @@ header ul{
 header li{
     color: var(--white);
     font: 500 18px 'Poppins', arial, sans-serif;
+}
+
+header li:not(#disabled){
     cursor: pointer;
 }
 
 .home-container{
     width: calc(100% - 60px);
-    min-height: calc(100vh - 70px);
-    max-height: 800px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -119,7 +120,6 @@ header li{
 
     .home-container{
         width: calc(100% - 30px);
-        min-height: calc(100vh - 140px);
         justify-content: flex-start;
         align-items: flex-start;
         margin: 120px auto 20px auto;

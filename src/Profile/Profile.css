@@ -2,7 +2,6 @@
 
 .profile-page{
     width: 100vw;
-    min-height: calc(100vh - 75px);
     display: grid;
     margin: 70px 0px 30px 0px;
     grid-template-columns: 1fr 2fr;
@@ -17,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0px 20px 0px 30px;
+    padding: 0px 20px 20px 30px;
     row-gap: 30px;
     border-bottom: 1pt solid var(--white-opacity-05);
 }
@@ -25,6 +24,11 @@
 .user-icon{
     font-size: 130px;
     color: var(--white-opacity-09);
+}
+
+.user-info img{
+    border-radius: 50%;
+    width: 130px;
 }
 
 .user-data{
@@ -49,6 +53,7 @@
     row-gap: 7px;
     border: 1pt solid var(--white-opacity-05);
     background-color: var(--white);
+    position: relative;
 }
 
 .data-items span{
@@ -65,6 +70,15 @@
     font-weight: 500;
 }
 
+.profile-page .pencil-icon{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 15px;
+    color: var(--black-opacity-07);
+    cursor: pointer;
+}
+
 .more-details{
     width: 100%;
     max-height: 800px;
@@ -75,7 +89,7 @@
 }
 
 @media screen and (min-width: 1500px) {
-    .user-icon{
+    .user-icon, .user-info img{
         font-size: 170px;
     }
 }
@@ -101,7 +115,7 @@
         justify-content: flex-start;
     }
 
-    .user-icon{
+    .user-icon, .user-info img{
         font-size: 110px;
     }
 
@@ -118,7 +132,6 @@
 
 @media screen and (max-width: 500px) {
     .profile-page{
-        min-height: calc(100vh - 130px);
         margin: 130px auto 0px auto;
     }   
 }

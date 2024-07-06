@@ -99,8 +99,7 @@
 
 .container-form{
     min-width: 75%;
-    border: 1pt solid rgb(255, 255, 255, 0.5);
-    padding: 20px 50px;
+    padding: 20px 30px;
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -141,7 +140,6 @@ form .eye-icon, form .lock-icon, form .user-icon, form .email-icon{
     font-size: 15px;
     height: 100%;
     top: 50%;
-    right: 20px;
     cursor: pointer;
     transform:  translateY(-50%);
     opacity: 0;
@@ -170,6 +168,7 @@ form .email-icon{
 form .eye-icon{
     color: var(--white-opacity-07);
     font-size: 16.5px;
+    right: 5px;
 }
 
 form .eye-visible{
@@ -281,7 +280,7 @@ form .btn-submit{
     background-color: var(--medium-blue);
     width: 50px;
     height: 30px;
-    font: 400 12px 'Poppins', 'Roboto', sans-serif;
+    font: 400 13px 'Poppins', 'Roboto', sans-serif;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -349,15 +348,15 @@ form .btn-submit{
     top: 0;
     left: 0;
     z-index: 20;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
     background-color: var(--white);
+    border-top-right-radius: 150px;
     overflow-y: hidden;
 }
 
 .text-center{
     width: 50%;
     min-width: 500px;
+    display: none;
 }
 
 .text-center h1{
@@ -386,9 +385,13 @@ form .btn-submit{
     pointer-events: none;
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (width <= 1000px){
     .auth-page{
         padding: 0;
+    }
+
+    form input:focus, form input{
+        background-color: var(--light-gray) !important;
     }
 
     .page-text-area{
@@ -412,11 +415,15 @@ form .btn-submit{
         margin: auto;
         min-width: 0%;
         padding: 20px 30px;
+        background-color: var(--light-gray);
     }
 
+    .form-division h3{
+        background-color: var(--light-gray);
+    }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (width <= 500px) {
     .auth-form .container-form{
         padding: 20px 20px;
         width: calc(100% - 30px);
